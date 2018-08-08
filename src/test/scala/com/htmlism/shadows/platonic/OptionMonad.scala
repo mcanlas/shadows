@@ -13,7 +13,7 @@ object OptionMonad {
     TypeClass("Functor", List(
       PolymorphicMethod("map", tpAb, List(
         Parameter("fa", UnaryType(Kind("F"), NullaryType("A"))),
-        Parameter("f", FunctionType(NullaryType("A"), NullaryType("B")))
+        Parameter("f", FunctionType("A", "B"))
       ), UnaryType(Kind("F"), NullaryType("B")))
     ), Nil)
 
@@ -26,7 +26,7 @@ object OptionMonad {
     TypeClass("Monad", List(
       PolymorphicMethod("flatMap", tpAb, List(
         Parameter("fa", UnaryType(Kind("F"), NullaryType("A"))),
-        Parameter("f", FunctionType(NullaryType("A"), NullaryType("B")))
+        Parameter("f", FunctionType("A", "B"))
       ), UnaryType(Kind("F"), NullaryType("B")))
     ), List(applicative))
 
