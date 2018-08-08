@@ -12,20 +12,20 @@ object OptionMonad {
   val functor =
     TypeClass("Functor", List(
       PolymorphicMethod("map", tpAb, List(
-        Parameter("fa", UnaryType(Kind("F"), NullaryType("A"))),
+        Parameter("fa", Kind("F") of "A"),
         Parameter("f", FunctionType("A", "B"))
       ), UnaryType(Kind("F"), NullaryType("B")))
     ), Nil)
 
   val applicative =
     TypeClass("Applicative", List(
-      PolymorphicMethod("pure", NonEmptyList(TypeParameter("A", Nil)), Nil, UnaryType(Kind("F"), NullaryType("A")))
+      PolymorphicMethod("pure", NonEmptyList(TypeParameter("A", Nil)), Nil, Kind("F") of "A")
     ), List(functor))
 
   val monad =
     TypeClass("Monad", List(
       PolymorphicMethod("flatMap", tpAb, List(
-        Parameter("fa", UnaryType(Kind("F"), NullaryType("A"))),
+        Parameter("fa", Kind("F") of "A"),
         Parameter("f", FunctionType("A", "B"))
       ), UnaryType(Kind("F"), NullaryType("B")))
     ), List(applicative))
