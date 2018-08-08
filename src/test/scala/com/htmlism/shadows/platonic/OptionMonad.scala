@@ -1,9 +1,17 @@
 package com.htmlism.shadows.platonic
 
+import scalaz.NonEmptyList
+
 object OptionMonad {
+  private val tpAb =
+    NonEmptyList(
+      TypeParameter("A", Nil),
+      TypeParameter("B", Nil),
+    )
+
   val functor =
     TypeClass("Functor", List(
-      Method("map", List(
+      PolymorphicMethod("map", tpAb, List(
         Parameter("fa", UnaryType(Kind("F"), NullaryType("A"))),
         Parameter("f", FunctionType(NullaryType("A"), NullaryType("B")))
       ), UnaryType(Kind("F"), NullaryType("B")))
@@ -11,12 +19,12 @@ object OptionMonad {
 
   val applicative =
     TypeClass("Applicative", List(
-      Method("pure", Nil, UnaryType(Kind("F"), NullaryType("A")))
+      PolymorphicMethod("pure", NonEmptyList(TypeParameter("A", Nil)), Nil, UnaryType(Kind("F"), NullaryType("A")))
     ), List(functor))
 
   val monad =
     TypeClass("Monad", List(
-      Method("flatMap", List(
+      PolymorphicMethod("flatMap", tpAb, List(
         Parameter("fa", UnaryType(Kind("F"), NullaryType("A"))),
         Parameter("f", FunctionType(NullaryType("A"), NullaryType("B")))
       ), UnaryType(Kind("F"), NullaryType("B")))
