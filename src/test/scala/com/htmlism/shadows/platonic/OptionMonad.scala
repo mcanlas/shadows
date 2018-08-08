@@ -30,5 +30,5 @@ object OptionMonad {
       ), UnaryType(Kind("F"), NullaryType("B")))
     ), List(applicative))
 
-  val option = TypeClassInstance(monad, "Option")
+  val option = TypeClassInstance(monad, Kind("Option"))
 }
