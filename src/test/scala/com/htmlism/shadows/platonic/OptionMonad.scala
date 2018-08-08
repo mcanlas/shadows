@@ -5,8 +5,8 @@ import scalaz.NonEmptyList
 object OptionMonad {
   private val tpAb =
     NonEmptyList(
-      TypeParameter("A", Nil),
-      TypeParameter("B", Nil),
+      UnaryHole("A"),
+      UnaryHole("B"),
     )
 
   val functor =
@@ -19,7 +19,7 @@ object OptionMonad {
 
   val applicative =
     TypeClass("Applicative", List(
-      PolymorphicMethod("pure", NonEmptyList(TypeParameter("A", Nil)), Nil, Kind("F") of "A")
+      PolymorphicMethod("pure", NonEmptyList(UnaryHole("A")), Nil, Kind("F") of "A")
     ), List(functor))
 
   val monad =
