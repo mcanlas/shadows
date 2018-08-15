@@ -10,7 +10,7 @@ object OptionMonad {
     )
 
   val functor =
-    TypeClass("Functor", List(
+    TypeClass("Functor", UnaryTypeConstructor("F"), List(
       PolymorphicMethod("map", tpAb, List(
         Parameter("fa", UnaryTypeConstructor("F") of "A"),
         Parameter("f", FunctionType("A", "B"))
@@ -18,12 +18,12 @@ object OptionMonad {
     ), Nil)
 
   val applicative =
-    TypeClass("Applicative", List(
+    TypeClass("Applicative", UnaryTypeConstructor("F"), List(
       PolymorphicMethod("pure", NonEmptyList(UnaryHole("A")), Nil, UnaryTypeConstructor("F") of "A")
     ), List(functor))
 
   val monad =
-    TypeClass("Monad", List(
+    TypeClass("Monad", UnaryTypeConstructor("F"), List(
       PolymorphicMethod("flatMap", tpAb, List(
         Parameter("fa", UnaryTypeConstructor("F") of "A"),
         Parameter("f", FunctionType("A", "B"))
