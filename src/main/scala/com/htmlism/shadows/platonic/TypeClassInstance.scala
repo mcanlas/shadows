@@ -1,3 +1,3 @@
 package com.htmlism.shadows.platonic
 
-case class TypeClassInstance(satisfies: TypeClass, forKind: Kind)
+case class TypeClassInstance(satisfies: TypeClass, forKind: UnaryTypeConstructor)
