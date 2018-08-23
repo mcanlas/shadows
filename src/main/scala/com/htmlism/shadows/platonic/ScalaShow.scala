@@ -10,6 +10,8 @@ object ScalaShow {
       def show(x: TypeClass): String = {
         val unaryTc = x.f.name + "[_]"
 
+        x.allMethods.foreach(println)
+
         s"""trait ${x.name}[$unaryTc] {
            |}
            |
