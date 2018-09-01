@@ -8,7 +8,34 @@ object ScalaShow {
   implicit val typeClass: ScalaShow[TypeClass] =
     new ScalaShow[TypeClass] {
       def show(x: TypeClass): String = {
-        s"""typeclass ${x.name} {
+        val (left, right) =
+          x match {
+            case BasicTypeClass(_, p, _) =>
+              val constraint =
+                p match {
+                  case NullaryTypeConstructor(s) =>
+                    ""
+
+                  case ConstrainedNtc(s, c) =>
+                    " extends " + c.name + s"[$s]"
+                }
+
+              (x.name + s"[${p.name}]", constraint)
+
+            case ConstructorClass(_, p, _) =>
+              val constraint =
+                p match {
+                  case UnaryTypeConstructor(s) =>
+                    ""
+
+                  case ConstrainedUtc(s, c) =>
+                    " extends " + c.name + s"[$s]"
+                }
+
+              (x.name + s"[${p.name}]", constraint)
+          }
+
+        s"""typeclass $left$right {
            |}
         """.stripMargin
       }
