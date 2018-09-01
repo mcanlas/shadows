@@ -35,7 +35,17 @@ object Run extends App {
       .k1("Monad", ConstrainedUtc("F", applicative))
       .w(Method("flatMap", FA =>: (A =>: FB) =>: FB))
 
-  for (tc <- List(functor, applicative, monad)) {
+  val semigroup =
+    TypeClass
+      .k0("Semigroup", 'A.ntc)
+      .w(Method("plus", A =>: A =>: A))
+
+  val monoid =
+    TypeClass
+      .k0("Monoid", ConstrainedNtc("A", semigroup))
+      .w(Method("zero", A))
+
+  for (tc <- List(functor, applicative, monad, semigroup, monoid)) {
     println {
       implicitly[HaskellShow[TypeClass]].show(tc)
     }
