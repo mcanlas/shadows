@@ -35,9 +35,16 @@ object ScalaShow {
               (x.name + s"[${p.name}]", constraint)
           }
 
-        s"""typeclass $left$right {
-           |}
-        """.stripMargin
+        val methods =
+          x.methods.map(toStr)
+
+        val lines =
+          List(s"typeclass $left$right {") ++ methods ++ List("}")
+
+        lines.mkString("\n")
       }
     }
+
+  private def toStr(m: Method) =
+    "  def " + m.name + ": "
 }

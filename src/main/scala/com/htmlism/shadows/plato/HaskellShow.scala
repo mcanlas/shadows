@@ -35,8 +35,16 @@ object HaskellShow {
               (constraint, x.name + " " + p.name.toLowerCase)
           }
 
-        s"""class $left$right where
-        """.stripMargin
+        val methods =
+          x.methods.map(toStr)
+
+        val lines =
+          List(s"class $left$right where") ++ methods
+
+        lines.mkString("\n")
       }
     }
+
+  private def toStr(m: Method) =
+    m.name + " :: "
 }
