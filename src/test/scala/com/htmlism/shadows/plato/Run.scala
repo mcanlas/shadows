@@ -2,20 +2,27 @@ package com.htmlism.shadows.plato
 
 object Run extends App {
   val option =
-    DataClass("Option", Nel.nels(NullaryTypeConstructor("A")), Nel(
-      Constructor("Some", List(NullaryTypeConstructor("A"))),
-      Constructor("None", Nil)
+    DataClass("Option", Nel.nels('A.ntc), Nel(
+      Constructor("Some", 'A.ntc),
+      Constructor("None")
     ))
 
+  // TODO
+//  val list =
+//    DataClass("List", Nel.nels('A.ntc), Nel(
+//      Constructor("Cons", 'ListA.ntc),
+//      Constructor("Nil")
+//    ))
+
   val either =
-    DataClass("Either", Nel.nels(NullaryTypeConstructor("A"), NullaryTypeConstructor("B")), Nel(
-      Constructor("Left", List(NullaryTypeConstructor("A"))),
-      Constructor("Right", List(NullaryTypeConstructor("B")))
+    DataClass("Either", Nel.nels('A.ntc, 'B.ntc), Nel(
+      Constructor("Left", 'A.ntc),
+      Constructor("Right", 'B.ntc)
     ))
 
   val functor =
     TypeClass
-      .k1("Functor", UnaryTypeConstructor("F"))
+      .k1("Functor", 'F.utc)
       .w(Method("map", FA =>: (A =>: B) =>: FB))
 
   val applicative =

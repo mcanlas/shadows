@@ -77,4 +77,12 @@ package object plato {
 
     rec(ts, Nil)
   }
+
+  implicit class Ops(s: Symbol) {
+    def ntc: NullaryTypeConstructor =
+      NullaryTypeConstructor(s.name)
+
+    def utc: UnaryTypeConstructor =
+      UnaryTypeConstructor(s.name)
+  }
 }
