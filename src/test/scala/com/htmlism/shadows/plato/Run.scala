@@ -9,12 +9,12 @@ object Run extends App {
   val applicative =
     TypeClass
       .k1("Applicative", ConstrainedUtc("F", functor))
-      .w(Method("map", FA =>: (A =>: B) =>: FB))
+      .w(Method("pure", A =>: FA))
 
   val monad =
     TypeClass
       .k1("Monad", ConstrainedUtc("F", applicative))
-      .w(Method("map", FA =>: (A =>: B) =>: FB))
+      .w(Method("flatMap", FA =>: (A =>: FB) =>: FB))
 
   for (tc <- List(functor, applicative, monad)) {
     println {
