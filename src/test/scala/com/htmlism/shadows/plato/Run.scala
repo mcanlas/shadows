@@ -3,21 +3,20 @@ package com.htmlism.shadows.plato
 object Run extends App {
   val option =
     DataClass("Option", Nel.nels('A.ntc), Nel(
-      Constructor("Some", 'A.ntc),
+      Constructor("Some", A),
       Constructor("None")
     ))
 
-  // TODO
-//  val list =
-//    DataClass("List", Nel.nels('A.ntc), Nel(
-//      Constructor("Cons", 'ListA.ntc),
-//      Constructor("Nil")
-//    ))
+  val list =
+    DataClass("List", Nel.nels('A.ntc), Nel(
+      Constructor("Cons", A, ConstructedOne("List", "A")),
+      Constructor("Nil")
+    ))
 
   val either =
     DataClass("Either", Nel.nels('A.ntc, 'B.ntc), Nel(
-      Constructor("Left", 'A.ntc),
-      Constructor("Right", 'B.ntc)
+      Constructor("Left", A),
+      Constructor("Right", B)
     ))
 
   val functor =
