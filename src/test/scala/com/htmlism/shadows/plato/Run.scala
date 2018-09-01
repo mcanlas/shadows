@@ -1,6 +1,18 @@
 package com.htmlism.shadows.plato
 
 object Run extends App {
+  val option =
+    DataClass("Option", Nel.nels(NullaryTypeConstructor("A")), Nel(
+      Constructor("Some", List(NullaryTypeConstructor("F"))),
+      Constructor("None", Nil)
+    ))
+
+  val either =
+    DataClass("Either", Nel.nels(NullaryTypeConstructor("A"), NullaryTypeConstructor("B")), Nel(
+      Constructor("Left", List(NullaryTypeConstructor("A"))),
+      Constructor("Right", List(NullaryTypeConstructor("B")))
+    ))
+
   val functor =
     TypeClass
       .k1("Functor", UnaryTypeConstructor("F"))

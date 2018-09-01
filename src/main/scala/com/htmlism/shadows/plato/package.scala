@@ -4,6 +4,7 @@ import scalaz.NonEmptyList
 
 package object plato {
   type Nel[A] = NonEmptyList[A]
+  val Nel = NonEmptyList
 
   object TypeClass {
     def k0(name: String, parameter: NullaryTypeParameter): BasicTypeClass =
