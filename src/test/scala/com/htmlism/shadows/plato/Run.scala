@@ -1,22 +1,31 @@
 package com.htmlism.shadows.plato
 
 object Run extends App {
+  // polymorphic
   val option =
     DataClass("Option", Nel.nels('A.ntc), Nel(
       Constructor("Some", A),
       Constructor("None")
     ))
 
+  // polymorphic
   val list =
     DataClass("List", Nel.nels('A.ntc), Nel(
       Constructor("Cons", A, ConstructedOne("List", "A")),
       Constructor("Nil")
     ))
 
+  // polymorphic over two parameters
   val either =
     DataClass("Either", Nel.nels('A.ntc, 'B.ntc), Nel(
       Constructor("Left", A),
       Constructor("Right", B)
+    ))
+
+  // example of one constructor
+  val nel =
+    DataClass("NonEmptyList", Nel.nels('A.ntc, 'B.ntc), Nel(
+      Constructor("Nel", A, ConstructedOne("List", "A"))
     ))
 
   val functor =
