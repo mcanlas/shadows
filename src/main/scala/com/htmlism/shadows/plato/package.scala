@@ -47,8 +47,8 @@ package object plato {
   case class Method(name: String, symbolicAlias: Option[String], signature: TypeSignature)
 
   sealed trait TypeSignature {
-    def =>:(left: TypeSignature): FunctionType =
-      FunctionType(left, this)
+    def =>:(left: TypeSignature): FunctionConsType =
+      FunctionConsType(left, this)
   }
 
   sealed trait TerminalTypeSignature extends TypeSignature
@@ -56,7 +56,7 @@ package object plato {
   case class BasicType(name: String) extends TerminalTypeSignature
   case class ConstructedOne(f: String, a: String) extends TerminalTypeSignature
 
-  case class FunctionType(a: TypeSignature, b: TypeSignature) extends TypeSignature
+  case class FunctionConsType(a: TypeSignature, b: TypeSignature) extends TypeSignature
 
   val A = BasicType("A")
   val B = BasicType("B")
