@@ -24,7 +24,7 @@ object Run extends App {
 
   // example of one constructor
   val nel =
-    DataClass("NonEmptyList", Nel.nels('A.ntc, 'B.ntc), Nel(
+    DataClass("NonEmptyList", Nel.nels('A.ntc), Nel(
       Constructor("Nel", A, ConstructedOne("List", "A"))
     ))
 
@@ -65,5 +65,19 @@ object Run extends App {
     }
 
     println
+  }
+
+  for (tc <- List(option, list, either, nel)) {
+    println {
+      implicitly[HaskellShow[DataClass]].show(tc)
+    }
+
+    println("\n--\n")
+
+    println {
+      implicitly[ScalaShow[DataClass]].show(tc)
+    }
+
+    println("\n--\n")
   }
 }
