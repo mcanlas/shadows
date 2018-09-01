@@ -1,14 +1,14 @@
 package com.htmlism.shadows.plato
 
-trait ChimeraShow[A] {
+trait HaskellShow[A] {
   def show(x: A): String
 }
 
-object ChimeraShow {
-  implicit val typeClass: ChimeraShow[TypeClass] =
-    new ChimeraShow[TypeClass] {
+object HaskellShow {
+  implicit val typeClass: HaskellShow[TypeClass] =
+    new HaskellShow[TypeClass] {
       def show(x: TypeClass): String = {
-        val haskellConstraintSignature =
+        val constraintSignature =
           x match {
             case BasicTypeClass(_, p, _) =>
               p match {
@@ -29,10 +29,7 @@ object ChimeraShow {
               }
           }
 
-        s"""class $haskellConstraintSignature${x.name} where
-           |
-           |typeclass ${x.name} {
-           |}
+        s"""class $constraintSignature${x.name} where
         """.stripMargin
       }
     }

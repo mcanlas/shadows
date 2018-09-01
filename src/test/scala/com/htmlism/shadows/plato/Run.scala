@@ -18,7 +18,13 @@ object Run extends App {
 
   for (tc <- List(functor, applicative, monad)) {
     println {
-      implicitly[ChimeraShow[TypeClass]].show(tc)
+      implicitly[HaskellShow[TypeClass]].show(tc)
+    }
+
+    println
+
+    println {
+      implicitly[ScalaShow[TypeClass]].show(tc)
     }
 
     println
