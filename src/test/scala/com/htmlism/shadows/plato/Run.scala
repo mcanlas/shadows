@@ -3,7 +3,7 @@ package com.htmlism.shadows.plato
 object Run extends App {
   val option =
     DataClass("Option", Nel.nels(NullaryTypeConstructor("A")), Nel(
-      Constructor("Some", List(NullaryTypeConstructor("F"))),
+      Constructor("Some", List(NullaryTypeConstructor("A"))),
       Constructor("None", Nil)
     ))
 
