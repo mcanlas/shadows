@@ -1,5 +1,7 @@
 package com.htmlism.shadows.plato
 
+import scalaz._, Scalaz._
+
 trait SimulacrumShow[A] {
   def show(x: A): String
 }
@@ -45,6 +47,9 @@ object SimulacrumShow {
       }
     }
 
-  private def toStr(m: Method) =
+  private def toStr(m: Method) = {
+    val (args, ret) = m.signature |> linearize
+
     "  def " + m.name + ": "
+  }
 }

@@ -62,4 +62,18 @@ package object plato {
   val B = BasicType("B")
   val FA = ConstructedOne("F", "A")
   val FB = ConstructedOne("F", "B")
+
+  def linearize(ts: TypeSignature): (List[TypeSignature], TerminalTypeSignature) = {
+    @annotation.tailrec
+    def rec(ts: TypeSignature, args: List[TypeSignature]): (List[TypeSignature], TerminalTypeSignature) =
+      ts match {
+        case FunctionConsType(a, b) =>
+          rec(b, args :+ a)
+
+        case term: TerminalTypeSignature =>
+          (args, term)
+      }
+
+    rec(ts, Nil)
+  }
 }

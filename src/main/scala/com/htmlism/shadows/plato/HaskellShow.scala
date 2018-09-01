@@ -1,5 +1,7 @@
 package com.htmlism.shadows.plato
 
+import scalaz._, Scalaz._
+
 trait HaskellShow[A] {
   def show(x: A): String
 }
@@ -36,7 +38,7 @@ object HaskellShow {
           }
 
         val methods =
-          x.methods.map(toStr)
+          x.methods.map(mToStr)
 
         val lines =
           List(s"class $left$right where") ++ methods
@@ -45,6 +47,25 @@ object HaskellShow {
       }
     }
 
-  private def toStr(m: Method) =
-    m.name + " :: "
+  private def mToStr(m: Method) = {
+    val signature = {
+      val (args, ret) = m.signature |> linearize
+
+      (args :+ ret).map(tsToStr).mkString(" -> ")
+    }
+
+    "  " + m.name + " :: " + signature
+  }
+
+  private def tsToStr(ts: TypeSignature): String =
+    ts match {
+      case FunctionConsType(a, b) =>
+        s"(${tsToStr(a)} -> ${tsToStr(b)})"
+
+      case ConstructedOne(f, a) =>
+        f.toLowerCase + " " + a.toLowerCase
+
+      case BasicType(s) =>
+        s.toLowerCase
+    }
 }
