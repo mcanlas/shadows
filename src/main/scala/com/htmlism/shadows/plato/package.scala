@@ -6,10 +6,10 @@ package object plato {
   type Nel[A] = NonEmptyList[A]
 
   object TypeClass {
-    def k0(name: String, parameter: UnaryTypeParameter): BasicTypeClass =
+    def k0(name: String, parameter: NullaryTypeParameter): BasicTypeClass =
       BasicTypeClass(name, parameter, Nil)
 
-    def k1(name: String, parameter: NullaryTypeParameter): ConstructorClass =
+    def k1(name: String, parameter: UnaryTypeParameter): ConstructorClass =
       ConstructorClass(name, parameter, Nil)
   }
 
@@ -19,11 +19,11 @@ package object plato {
     def methods: List[Method]
   }
 
-  case class BasicTypeClass(name: String, parameter: UnaryTypeParameter, methods: List[Method]) extends TypeClass {
+  case class BasicTypeClass(name: String, parameter: NullaryTypeParameter, methods: List[Method]) extends TypeClass {
     def w(m: Method): BasicTypeClass = copy(methods = m +: methods)
   }
 
-  case class ConstructorClass(name: String, parameter: NullaryTypeParameter, methods: List[Method]) extends TypeClass {
+  case class ConstructorClass(name: String, parameter: UnaryTypeParameter, methods: List[Method]) extends TypeClass {
     def w(m: Method): ConstructorClass = copy(methods = m +: methods)
   }
 
@@ -31,14 +31,14 @@ package object plato {
     def name: String
   }
 
-  sealed trait UnaryTypeParameter extends TypeParameter
   sealed trait NullaryTypeParameter extends TypeParameter
+  sealed trait UnaryTypeParameter extends TypeParameter
 
-  case class NullaryTypeConstructor(name: String) extends UnaryTypeParameter
-  case class UnaryTypeConstructor(name: String) extends NullaryTypeParameter
+  case class NullaryTypeConstructor(name: String) extends NullaryTypeParameter
+  case class UnaryTypeConstructor(name: String) extends UnaryTypeParameter
 
-  case class ConstrainedNtc(name: String, constraint: BasicTypeClass) extends UnaryTypeParameter
-  case class ConstrainedUtc(name: String, constraint: ConstructorClass) extends NullaryTypeParameter
+  case class ConstrainedNtc(name: String, constraint: BasicTypeClass) extends NullaryTypeParameter
+  case class ConstrainedUtc(name: String, constraint: ConstructorClass) extends UnaryTypeParameter
 
   object Method {
     def apply(name: String, signature: TypeSignature): Method =

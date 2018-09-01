@@ -8,7 +8,28 @@ object ChimeraShow {
   implicit val typeClass: ChimeraShow[TypeClass] =
     new ChimeraShow[TypeClass] {
       def show(x: TypeClass): String = {
-        s"""class ${x.name}
+        val haskellConstraintSignature =
+          x match {
+            case BasicTypeClass(_, p, _) =>
+              p match {
+                case NullaryTypeConstructor(s) =>
+                  s.toLowerCase + " => "
+
+                case ConstrainedNtc(s, c) =>
+                  c.name + " " + s.toLowerCase + " => "
+              }
+
+            case ConstructorClass(_, p, _) =>
+              p match {
+                case UnaryTypeConstructor(s) =>
+                  s.toLowerCase + " => "
+
+                case ConstrainedUtc(s, c) =>
+                  c.name + " " + s.toLowerCase + " => "
+              }
+          }
+
+        s"""class $haskellConstraintSignature${x.name}
            |
            |typeclass ${x.name} {
            |}
