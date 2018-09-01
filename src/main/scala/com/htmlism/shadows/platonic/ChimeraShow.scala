@@ -1,12 +1,12 @@
 package com.htmlism.shadows.platonic
 
-trait ScalaShow[A] {
+trait ChimeraShow[A] {
   def show(x: A): String
 }
 
-object ScalaShow {
-  implicit val typeClass: ScalaShow[TypeClass] =
-    new ScalaShow[TypeClass] {
+object ChimeraShow {
+  implicit val typeClass: ChimeraShow[TypeClass] =
+    new ChimeraShow[TypeClass] {
       def show(x: TypeClass): String = {
         val unaryTc = x.f.name + "[_]"
 
