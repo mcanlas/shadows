@@ -7,7 +7,7 @@ trait HaskellShow[A] {
 }
 
 object HaskellShow {
-  implicit val typeClass: HaskellShow[TypeClass] =
+  implicit val hsTypeClass: HaskellShow[TypeClass] =
     new HaskellShow[TypeClass] {
       def show(x: TypeClass): String = {
         val (left, right) =

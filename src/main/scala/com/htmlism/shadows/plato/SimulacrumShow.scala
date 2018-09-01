@@ -7,7 +7,7 @@ trait SimulacrumShow[A] {
 }
 
 object SimulacrumShow {
-  implicit val typeClass: SimulacrumShow[TypeClass] =
+  implicit val simTypeClass: SimulacrumShow[TypeClass] =
     new SimulacrumShow[TypeClass] {
       def show(x: TypeClass): String = {
         val (left, right) =
