@@ -13,7 +13,7 @@ object ChimeraShow {
             case BasicTypeClass(_, p, _) =>
               p match {
                 case NullaryTypeConstructor(s) =>
-                  s.toLowerCase + " => "
+                  ""
 
                 case ConstrainedNtc(s, c) =>
                   c.name + " " + s.toLowerCase + " => "
@@ -22,14 +22,14 @@ object ChimeraShow {
             case ConstructorClass(_, p, _) =>
               p match {
                 case UnaryTypeConstructor(s) =>
-                  s.toLowerCase + " => "
+                  ""
 
                 case ConstrainedUtc(s, c) =>
                   c.name + " " + s.toLowerCase + " => "
               }
           }
 
-        s"""class $haskellConstraintSignature${x.name}
+        s"""class $haskellConstraintSignature${x.name} where
            |
            |typeclass ${x.name} {
            |}
