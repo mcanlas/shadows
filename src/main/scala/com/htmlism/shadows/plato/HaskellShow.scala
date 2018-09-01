@@ -8,28 +8,34 @@ object HaskellShow {
   implicit val typeClass: HaskellShow[TypeClass] =
     new HaskellShow[TypeClass] {
       def show(x: TypeClass): String = {
-        val constraintSignature =
+        val (left, right) =
           x match {
             case BasicTypeClass(_, p, _) =>
-              p match {
-                case NullaryTypeConstructor(s) =>
-                  ""
+              val constraint =
+                p match {
+                  case NullaryTypeConstructor(s) =>
+                    ""
 
-                case ConstrainedNtc(s, c) =>
-                  c.name + " " + s.toLowerCase + " => "
-              }
+                  case ConstrainedNtc(s, c) =>
+                    c.name + " " + s.toLowerCase + " => "
+                }
+
+              (constraint, x.name + " " + p.name.toLowerCase)
 
             case ConstructorClass(_, p, _) =>
-              p match {
-                case UnaryTypeConstructor(s) =>
-                  ""
+              val constraint =
+                p match {
+                  case UnaryTypeConstructor(s) =>
+                    ""
 
-                case ConstrainedUtc(s, c) =>
-                  c.name + " " + s.toLowerCase + " => "
-              }
+                  case ConstrainedUtc(s, c) =>
+                    c.name + " " + s.toLowerCase + " => "
+                }
+
+              (constraint, x.name + " " + p.name.toLowerCase)
           }
 
-        s"""class $constraintSignature${x.name} where
+        s"""class $left$right where
         """.stripMargin
       }
     }
