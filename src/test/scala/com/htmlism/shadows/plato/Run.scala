@@ -24,7 +24,7 @@ object Run extends App {
     println
 
     println {
-      implicitly[ScalaShow[TypeClass]].show(tc)
+      implicitly[SimulacrumShow[TypeClass]].show(tc)
     }
 
     println

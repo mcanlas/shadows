@@ -1,12 +1,12 @@
 package com.htmlism.shadows.plato
 
-trait ScalaShow[A] {
+trait SimulacrumShow[A] {
   def show(x: A): String
 }
 
-object ScalaShow {
-  implicit val typeClass: ScalaShow[TypeClass] =
-    new ScalaShow[TypeClass] {
+object SimulacrumShow {
+  implicit val typeClass: SimulacrumShow[TypeClass] =
+    new SimulacrumShow[TypeClass] {
       def show(x: TypeClass): String = {
         val (left, right) =
           x match {
