@@ -12,7 +12,7 @@ object SimulacrumShow {
       def show(x: TypeClass): String = {
         val (left, right) =
           x match {
-            case BasicTypeClass(_, p, _) =>
+            case OverStar(_, p, _) =>
               val constraint =
                 p match {
                   case NullaryTypeConstructor(s) =>
@@ -24,7 +24,7 @@ object SimulacrumShow {
 
               (x.name + s"[${p.name}]", constraint)
 
-            case ConstructorClass(_, p, _) =>
+            case OverStarStar(_, p, _) =>
               val constraint =
                 p match {
                   case UnaryTypeConstructor(s) =>
