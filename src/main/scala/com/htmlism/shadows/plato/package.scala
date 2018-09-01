@@ -6,10 +6,10 @@ package object plato {
   type Nel[A] = NonEmptyList[A]
 
   object TypeClass {
-    def k0(name: String, parameter: UnaryTypeParameter): TypeClass =
+    def k0(name: String, parameter: UnaryTypeParameter): BasicTypeClass =
       BasicTypeClass(name, parameter, Nil)
 
-    def k1(name: String, parameter: NullaryTypeParameter): TypeClass =
+    def k1(name: String, parameter: NullaryTypeParameter): ConstructorClass =
       ConstructorClass(name, parameter, Nil)
   }
 
@@ -19,9 +19,13 @@ package object plato {
     def methods: List[Method]
   }
 
-  case class BasicTypeClass(name: String, parameter: UnaryTypeParameter, methods: List[Method]) extends TypeClass
+  case class BasicTypeClass(name: String, parameter: UnaryTypeParameter, methods: List[Method]) extends TypeClass {
+    def w(m: Method): BasicTypeClass = copy(methods = m +: methods)
+  }
 
-  case class ConstructorClass(name: String, parameter: NullaryTypeParameter, methods: List[Method]) extends TypeClass
+  case class ConstructorClass(name: String, parameter: NullaryTypeParameter, methods: List[Method]) extends TypeClass {
+    def w(m: Method): ConstructorClass = copy(methods = m +: methods)
+  }
 
   sealed trait TypeParameter {
     def name: String
@@ -36,17 +40,26 @@ package object plato {
   case class ConstrainedNtc(name: String, constraint: BasicTypeClass) extends UnaryTypeParameter
   case class ConstrainedUtc(name: String, constraint: ConstructorClass) extends NullaryTypeParameter
 
-  case class Method(name: String, symbolicAlias: String, signature: TypeSignature)
+  object Method {
+    def apply(name: String, signature: TypeSignature): Method =
+      Method(name, None, signature)
+  }
+  case class Method(name: String, symbolicAlias: Option[String], signature: TypeSignature)
 
-  sealed trait TypeSignature
-
-  sealed trait TerminalTypeSignature extends TypeSignature {
+  sealed trait TypeSignature {
     def =>:(left: TypeSignature): FunctionType =
       FunctionType(left, this)
   }
 
+  sealed trait TerminalTypeSignature extends TypeSignature
+
   case class BasicType(name: String) extends TerminalTypeSignature
   case class ConstructedOne(f: String, a: String) extends TerminalTypeSignature
 
-  case class FunctionType(a: TypeSignature, b: TerminalTypeSignature) extends TypeSignature
+  case class FunctionType(a: TypeSignature, b: TypeSignature) extends TypeSignature
+
+  val A = BasicType("A")
+  val B = BasicType("B")
+  val FA = ConstructedOne("F", "A")
+  val FB = ConstructedOne("F", "B")
 }

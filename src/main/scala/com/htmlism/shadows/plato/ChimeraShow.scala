@@ -8,15 +8,11 @@ object ChimeraShow {
   implicit val typeClass: ChimeraShow[TypeClass] =
     new ChimeraShow[TypeClass] {
       def show(x: TypeClass): String = {
-        val unaryTc = x.f.name + "[_]"
-
-        x.allMethods.foreach(println)
-
-        s"""trait ${x.name}[$unaryTc] {
-           |}
+        s"""class ${x.name}
            |
-           |object ${x.name} {
+           |typeclass ${x.name} {
            |}
         """.stripMargin
       }
     }
+}
