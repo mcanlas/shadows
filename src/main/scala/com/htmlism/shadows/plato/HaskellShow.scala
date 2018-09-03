@@ -68,28 +68,4 @@ object HaskellShow {
       case BasicType(s) =>
         s.toLowerCase
     }
-
-  implicit val hsDataClass: HaskellShow[DataClass] =
-    new HaskellShow[DataClass] {
-      def show(x: DataClass): String = {
-        val typeParameters = x.typeParameters.map(_.name.toLowerCase).toList.mkString(" ")
-
-        val constructors = x.constructors.map(cToStr).toList.mkString(" | ")
-
-        s"data ${x.name} $typeParameters = $constructors"
-      }
-    }
-
-  private def cToStr(c: Constructor) = {
-    val parameters =
-      c.typeSignatures
-        .map {
-          case BasicType(s) => s.toLowerCase
-          case ConstructedOne(f, a) => s"($f ${a.toLowerCase})"
-          case _ => throw new IllegalStateException
-        }
-        .mkString(" ")
-
-    s"${c.name} $parameters"
-  }
 }
