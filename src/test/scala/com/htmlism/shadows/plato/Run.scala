@@ -1,4 +1,7 @@
-package com.htmlism.shadows.plato
+package com.htmlism.shadows
+package plato
+
+import scalaz._, Scalaz._
 
 object Run extends App {
   // polymorphic
@@ -69,15 +72,19 @@ object Run extends App {
 
   for (tc <- List(option, list, either, nel)) {
     println {
-      implicitly[HaskellShow[DataClass]].show(tc)
-    }
-
-    println("\n--\n")
-
-    println {
       implicitly[ScalaShow[DataClass]].show(tc)
     }
 
     println("\n--\n")
   }
+
+  def show[A, B : ShadowShow](c: Transpiler[A, B])(x: A): Unit =
+    println {
+      x |>
+        c.transpile |>
+        implicitly[ShadowShow[B]].show
+    }
+
+  List(option, list, either, nel)
+    .foreach(show(haskell.HaskellCompiler))
 }
