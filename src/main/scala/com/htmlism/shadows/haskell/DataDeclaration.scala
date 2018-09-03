@@ -1,6 +1,9 @@
-package com.htmlism.shadows.haskell
+package com.htmlism.shadows
+package haskell
 
 object DataDeclaration {
+  implicit val haskellShow: ShadowShow[DataDeclaration] = HaskellShow
+
   def apply(s: String, tps: String*): DataDeclaration =
     DataDeclaration(s, tps.toList, Nil)
 }
