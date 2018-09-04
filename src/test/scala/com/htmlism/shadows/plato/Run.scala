@@ -86,5 +86,8 @@ object Run extends App {
     }
 
   List(option, list, either, nel)
-    .foreach(show(haskell.HaskellCompiler))
+    .foreach { d =>
+      show(haskell.HaskellCompiler)(d)
+      show(scala.ScalaCompiler)(d)
+    }
 }
