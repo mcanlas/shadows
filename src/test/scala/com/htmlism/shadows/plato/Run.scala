@@ -25,6 +25,12 @@ object Run extends App {
       Constructor("Right", B)
     ))
 
+  /**
+   * In Haskell, a constructor can have same name as the data type.
+   *
+   * In Scala, this can be true for nullary constructors (case objects) but not for
+   * other constructors (case classes).
+   */
   // example of one constructor
   val nel =
     DataClass("NonEmptyList", Nel.nels('A.ntc), Nel(
@@ -87,7 +93,12 @@ object Run extends App {
 
   List(option, list, either, nel)
     .foreach { d =>
+      println("\n------\n")
+
       show(haskell.HaskellCompiler)(d)
+
+      println("\n--\n")
+
       show(scala.ScalaCompiler)(d)
     }
 }
