@@ -87,7 +87,12 @@ object Run extends App {
 
   List(option, list, either, nel)
     .foreach { d =>
+      println("\n------\n")
+
       show(haskell.HaskellCompiler)(d)
+
+      println("\n--\n")
+
       show(scala.ScalaCompiler)(d)
     }
 }
