@@ -17,11 +17,11 @@ sealed trait Template {
   def name: String
 }
 
-case class ScalaObject(name: String) extends Template
+case class ScalaObject(name: String, typeParameters: List[String]) extends Template
 
 case class ScalaClass(name: String) extends Template
 
-case class Trait(name: String, isSealed: Boolean) extends Template
+case class Trait(name: String, isSealed: Boolean, typeParameters: List[String]) extends Template
 
 object ScalaObjectShow extends ShadowShow[ScalaObject] {
   def show(x: ScalaObject): String =
