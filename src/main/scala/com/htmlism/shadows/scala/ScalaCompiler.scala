@@ -12,7 +12,7 @@ object ScalaCompiler extends Transpiler[plato.DataClass, List[Template]] {
     sealedTrait(a) ++ constructors(a)
 
   private def sealedTrait(a: DataClass) = {
-    val tps = a.typeParameters.map(_.name)
+    val tps = a.typeParameters.map("+" + _.name)
 
     List {
       Trait(a.name, isSealed = true, typeParameters = tps, supers = Nil)
