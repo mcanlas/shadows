@@ -17,6 +17,12 @@ object Template {
       ""
     else
       " extends " + xs.mkString(" with ")
+
+  def tpStr(xs: List[String]): String =
+    if (xs.isEmpty)
+      ""
+    else
+      "[" + xs.mkString(", ") + "]"
 }
 
 sealed trait Template {
@@ -39,10 +45,13 @@ object ScalaObjectShow extends ShadowShow[ScalaObject] {
       else
         ""
 
+    val tpStr =
+      Template.tpStr(x.typeParameters)
+
     val supers =
       Template.supersStr(x.supers)
 
-    s"${strCase}object ${x.name}$supers"
+    s"${strCase}object ${x.name}$tpStr$supers"
   }
 }
 
@@ -54,10 +63,13 @@ object ScalaClassShow extends ShadowShow[ScalaClass] {
       else
         ""
 
+    val tpStr =
+      Template.tpStr(x.typeParameters)
+
     val supers =
       Template.supersStr(x.supers)
 
-    s"${strCase}class ${x.name}$supers"
+    s"${strCase}class ${x.name}$tpStr$supers"
   }
 }
 
@@ -69,9 +81,12 @@ object TraitShow extends ShadowShow[Trait] {
       else
         ""
 
+    val tpStr =
+      Template.tpStr(x.typeParameters)
+
     val supers =
       Template.supersStr(x.supers)
 
-    s"${strSealed}trait ${x.name}$supers"
+    s"${strSealed}trait ${x.name}$tpStr$supers"
   }
 }
