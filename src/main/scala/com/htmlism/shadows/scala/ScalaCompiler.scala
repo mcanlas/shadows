@@ -1,7 +1,7 @@
 package com.htmlism.shadows
 package scala
 
-import com.htmlism.shadows.plato.DataClass
+import com.htmlism.shadows.plato.{ DataClass, TypeSignature }
 
 /**
  * Possible degenerate case. If a data class only has one constructor, it doesn't need
@@ -30,7 +30,26 @@ object ScalaCompiler extends Transpiler[plato.DataClass, List[Template]] {
       if (c.parameters.isEmpty) {
         ScalaObject(c.name, isCase = true, typeParameters = Nil, supers)
       } else {
-        ScalaClass(c.name, isCase = true, typeParameters = Nil, supers)
+        val parameters =
+          c
+            .parameters
+            .map{ p =>
+              p.name + ": " + sigToStr(p.sig)
+            }
+
+        ScalaClass(c.name, isCase = true, typeParameters = Nil, supers, parameters)
       }
     }.list.toList
+
+  private def sigToStr(sig: TypeSignature): String =
+    sig match {
+      case plato.BasicType(s) =>
+        s
+
+      case plato.ConstructedOne(f, a) =>
+        s"$f[$a]"
+
+      case plato.FunctionConsType(a, b) =>
+        sigToStr(a) + " => " + sigToStr(b)
+    }
 }

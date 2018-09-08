@@ -33,7 +33,7 @@ sealed trait Template {
 
 case class ScalaObject(name: String, isCase: Boolean, typeParameters: List[String], supers: List[String]) extends Template
 
-case class ScalaClass(name: String, isCase: Boolean, typeParameters: List[String], supers: List[String]) extends Template
+case class ScalaClass(name: String, isCase: Boolean, typeParameters: List[String], supers: List[String], parameters: List[String]) extends Template
 
 case class Trait(name: String, isSealed: Boolean, typeParameters: List[String], supers: List[String]) extends Template
 
@@ -69,7 +69,13 @@ object ScalaClassShow extends ShadowShow[ScalaClass] {
     val supers =
       Template.supersStr(x.supers)
 
-    s"${strCase}class ${x.name}$tpStr$supers"
+    val parameters =
+      if (x.parameters.isEmpty)
+        ""
+      else
+        "(" + x.parameters.mkString(", ") + ")"
+
+    s"${strCase}class ${x.name}$tpStr$parameters$supers"
   }
 }
 
