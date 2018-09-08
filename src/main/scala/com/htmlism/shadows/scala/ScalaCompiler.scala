@@ -9,14 +9,14 @@ object ScalaCompiler extends Transpiler[plato.DataClass, List[Template]] {
 
   private def sealedTrait(a: DataClass) =
     List {
-      Trait(a.name, isSealed = true, Nil)
+      Trait(a.name, isSealed = true, typeParameters = Nil, supers = Nil)
     }
 
   private def constructors(a: DataClass) =
     a.constructors.map { c =>
       if (c.typeSignatures.isEmpty)
-        ScalaObject(c.name, isCase = true, Nil)
+        ScalaObject(c.name, isCase = true, typeParameters = Nil, supers = Nil)
       else
-        ScalaClass(c.name, isCase = true, Nil)
+        ScalaClass(c.name, isCase = true, typeParameters = Nil, supers = Nil)
     }.list.toList
 }

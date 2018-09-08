@@ -11,17 +11,25 @@ object Template {
           case a: Trait       => TraitShow.show(a)
         }
     }
+
+  def supersStr(xs: List[String]): String =
+    if (xs.isEmpty)
+      ""
+    else
+      " extends " + xs.mkString(" with ")
 }
 
 sealed trait Template {
   def name: String
+
+  def supers: List[String]
 }
 
-case class ScalaObject(name: String, isCase: Boolean, typeParameters: List[String]) extends Template
+case class ScalaObject(name: String, isCase: Boolean, typeParameters: List[String], supers: List[String]) extends Template
 
-case class ScalaClass(name: String, isCase: Boolean, typeParameters: List[String]) extends Template
+case class ScalaClass(name: String, isCase: Boolean, typeParameters: List[String], supers: List[String]) extends Template
 
-case class Trait(name: String, isSealed: Boolean, typeParameters: List[String]) extends Template
+case class Trait(name: String, isSealed: Boolean, typeParameters: List[String], supers: List[String]) extends Template
 
 object ScalaObjectShow extends ShadowShow[ScalaObject] {
   def show(x: ScalaObject): String = {
@@ -30,7 +38,11 @@ object ScalaObjectShow extends ShadowShow[ScalaObject] {
         "case "
       else
         ""
-    s"${strCase}object ${x.name}"
+
+    val supers =
+      Template.supersStr(x.supers)
+
+    s"${strCase}object ${x.name}$supers"
   }
 }
 
@@ -41,7 +53,11 @@ object ScalaClassShow extends ShadowShow[ScalaClass] {
         "case "
       else
         ""
-    s"${strCase}class ${x.name}"
+
+    val supers =
+      Template.supersStr(x.supers)
+
+    s"${strCase}class ${x.name}$supers"
   }
 }
 
@@ -53,6 +69,9 @@ object TraitShow extends ShadowShow[Trait] {
       else
         ""
 
-    s"${strSealed}trait ${x.name}"
+    val supers =
+      Template.supersStr(x.supers)
+
+    s"${strSealed}trait ${x.name}$supers"
   }
 }
