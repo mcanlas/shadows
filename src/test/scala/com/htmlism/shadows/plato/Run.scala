@@ -4,23 +4,29 @@ package plato
 import scalaz._, Scalaz._
 
 object Run extends App {
+  val boolean =
+    DataClass("Boolean", Nil, Nel(
+      Constructor("True"),
+      Constructor("False")
+  ))
+
   // polymorphic
   val option =
-    DataClass("Option", Nel.nels('A.ntc), Nel(
+    DataClass("Option", List('A.ntc), Nel(
       Constructor("Some", A),
       Constructor("None")
     ))
 
   // polymorphic
   val list =
-    DataClass("List", Nel.nels('A.ntc), Nel(
+    DataClass("List", List('A.ntc), Nel(
       Constructor("Cons", A, ConstructedOne("List", "A")),
       Constructor("Nil")
     ))
 
   // polymorphic over two parameters
   val either =
-    DataClass("Either", Nel.nels('A.ntc, 'B.ntc), Nel(
+    DataClass("Either", List('A.ntc, 'B.ntc), Nel(
       Constructor("Left", A),
       Constructor("Right", B)
     ))
@@ -33,7 +39,7 @@ object Run extends App {
    */
   // example of one constructor
   val nel =
-    DataClass("NonEmptyList", Nel.nels('A.ntc), Nel(
+    DataClass("NonEmptyList", List('A.ntc), Nel(
       Constructor("Nel", A, ConstructedOne("List", "A"))
     ))
 
@@ -91,7 +97,7 @@ object Run extends App {
         implicitly[ShadowShow[B]].show
     }
 
-  List(option, list, either, nel)
+  List(boolean, option, list, either, nel)
     .foreach { d =>
       println("\n------\n")
 
