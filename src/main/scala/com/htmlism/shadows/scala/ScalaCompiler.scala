@@ -23,7 +23,7 @@ object ScalaCompiler extends Transpiler[plato.DataClass, List[Template]] {
         else
           List(a.name + "[]")
 
-      if (c.typeSignatures.isEmpty) {
+      if (c.parameters.isEmpty) {
         ScalaObject(c.name, isCase = true, typeParameters = Nil, supers)
       } else {
         ScalaClass(c.name, isCase = true, typeParameters = Nil, supers)

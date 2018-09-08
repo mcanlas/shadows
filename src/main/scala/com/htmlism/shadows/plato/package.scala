@@ -11,6 +11,8 @@ package object plato {
   val FA = ConstructedOne("F", "A")
   val FB = ConstructedOne("F", "B")
 
+  val Ax = Parameter("x", A)
+
   implicit class Ops(s: Symbol) {
     def ntc: NullaryTypeConstructor =
       NullaryTypeConstructor(s.name)

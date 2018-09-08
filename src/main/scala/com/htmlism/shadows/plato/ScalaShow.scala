@@ -23,11 +23,12 @@ object ScalaShow {
     }
 
   private def cToStr(x: DataClass)(c: Constructor) = {
-    if (c.typeSignatures.isEmpty)
+    if (c.parameters.isEmpty)
       "case object " + c.name
     else {
       val parameters =
-        c.typeSignatures
+        c.parameters
+          .map(_.sig)
           .map {
             case BasicType(s) => s
             case ConstructedOne(f, a) => s"$f[$a]"
