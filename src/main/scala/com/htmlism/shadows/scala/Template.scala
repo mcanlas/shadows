@@ -19,7 +19,7 @@ sealed trait Template {
 
 case class ScalaObject(name: String, isCase: Boolean, typeParameters: List[String]) extends Template
 
-case class ScalaClass(name: String, isCase: Boolean) extends Template
+case class ScalaClass(name: String, isCase: Boolean, typeParameters: List[String]) extends Template
 
 case class Trait(name: String, isSealed: Boolean, typeParameters: List[String]) extends Template
 
