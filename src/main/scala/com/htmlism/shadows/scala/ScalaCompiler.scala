@@ -8,7 +8,7 @@ object ScalaCompiler extends Transpiler[plato.DataClass, List[Template]] {
     sealedTrait(a) ++ constructors(a)
 
   private def sealedTrait(a: DataClass) = {
-    val tps = a.typeParameters.list.toList.map(_.name)
+    val tps = a.typeParameters.map(_.name)
 
     List {
       Trait(a.name, isSealed = true, typeParameters = tps, supers = Nil)
@@ -17,10 +17,16 @@ object ScalaCompiler extends Transpiler[plato.DataClass, List[Template]] {
 
   private def constructors(a: DataClass) =
     a.constructors.map { c =>
+      val supers =
+        if (a.typeParameters.isEmpty)
+          List(a.name)
+        else
+          List(a.name + "[]")
+
       if (c.typeSignatures.isEmpty) {
-        ScalaObject(c.name, isCase = true, typeParameters = Nil, supers = Nil)
+        ScalaObject(c.name, isCase = true, typeParameters = Nil, supers)
       } else {
-        ScalaClass(c.name, isCase = true, typeParameters = Nil, supers = Nil)
+        ScalaClass(c.name, isCase = true, typeParameters = Nil, supers)
       }
     }.list.toList
 }
