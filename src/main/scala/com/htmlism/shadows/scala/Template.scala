@@ -17,20 +17,32 @@ sealed trait Template {
   def name: String
 }
 
-case class ScalaObject(name: String, typeParameters: List[String]) extends Template
+case class ScalaObject(name: String, isCase: Boolean, typeParameters: List[String]) extends Template
 
-case class ScalaClass(name: String) extends Template
+case class ScalaClass(name: String, isCase: Boolean) extends Template
 
 case class Trait(name: String, isSealed: Boolean, typeParameters: List[String]) extends Template
 
 object ScalaObjectShow extends ShadowShow[ScalaObject] {
-  def show(x: ScalaObject): String =
-    s"object ${x.name}"
+  def show(x: ScalaObject): String = {
+    val strCase =
+      if (x.isCase)
+        "case "
+      else
+        ""
+    s"${strCase}object ${x.name}"
+  }
 }
 
 object ScalaClassShow extends ShadowShow[ScalaClass] {
-  def show(x: ScalaClass): String =
-    s"class ${x.name}"
+  def show(x: ScalaClass): String = {
+    val strCase =
+      if (x.isCase)
+        "case "
+      else
+        ""
+    s"${strCase}class ${x.name}"
+  }
 }
 
 object TraitShow extends ShadowShow[Trait] {

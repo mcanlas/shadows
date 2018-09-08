@@ -15,8 +15,8 @@ object ScalaCompiler extends Transpiler[plato.DataClass, List[Template]] {
   private def constructors(a: DataClass) =
     a.constructors.map { c =>
       if (c.typeSignatures.isEmpty)
-        ScalaObject(c.name, Nil)
+        ScalaObject(c.name, isCase = true, Nil)
       else
-        ScalaClass(c.name)
+        ScalaClass(c.name, isCase = true)
     }.list.toList
 }
