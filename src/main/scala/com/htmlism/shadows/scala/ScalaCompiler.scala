@@ -3,6 +3,10 @@ package scala
 
 import com.htmlism.shadows.plato.DataClass
 
+/**
+ * Possible degenerate case. If a data class only has one constructor, it doesn't need
+ * a separate trait in addition to its constructor.
+ */
 object ScalaCompiler extends Transpiler[plato.DataClass, List[Template]] {
   def transpile(a: DataClass): List[Template] =
     sealedTrait(a) ++ constructors(a)
