@@ -13,22 +13,22 @@ object Run extends App {
   // polymorphic
   val option =
     DataClass("Option", List('A.ntc), Nel(
-      Constructor("Some", A),
+      Constructor("Some", Ax),
       Constructor("None")
     ))
 
   // polymorphic
   val list =
     DataClass("List", List('A.ntc), Nel(
-      Constructor("Cons", A, ConstructedOne("List", "A")),
+      Constructor("Cons", Ax, Parameter("xs", ConstructedOne("List", "A"))),
       Constructor("Nil")
     ))
 
   // polymorphic over two parameters
   val either =
     DataClass("Either", List('A.ntc, 'B.ntc), Nel(
-      Constructor("Left", A),
-      Constructor("Right", B)
+      Constructor("Left", Ax),
+      Constructor("Right", Parameter("x", B))
     ))
 
   /**
@@ -40,7 +40,7 @@ object Run extends App {
   // example of one constructor
   val nel =
     DataClass("NonEmptyList", List('A.ntc), Nel(
-      Constructor("Nel", A, ConstructedOne("List", "A"))
+      Constructor("Nel", Ax, Parameter("xs", ConstructedOne("List", "A")))
     ))
 
   val functor =

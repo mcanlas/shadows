@@ -12,7 +12,7 @@ object HaskellCompiler extends Transpiler[plato.DataClass, DataDeclaration] {
   }
 
   private def consToCons(cons: plato.Constructor): Constructor =
-    Constructor(cons.name, cons.typeSignatures.map {
+    Constructor(cons.name, cons.parameters.map(_.sig).map {
       case plato.BasicType(s) =>
         haskell.Proper(s.toLowerCase)
 
