@@ -5,43 +5,53 @@ import scalaz._, Scalaz._
 
 object Run extends App {
   val boolean =
-    DataClass("Boolean", Nil, Nel(
-      Constructor("True"),
-      Constructor("False")
-  ))
+    DataClass("Boolean",
+              Nil,
+              Nel(
+                Constructor("True"),
+                Constructor("False")
+              ))
 
   // polymorphic
   val option =
-    DataClass("Option", List('A.ntc), Nel(
-      Constructor("Some", Ax),
-      Constructor("None")
-    ))
+    DataClass("Option",
+              List('A.ntc),
+              Nel(
+                Constructor("Some", Ax),
+                Constructor("None")
+              ))
 
   // polymorphic
   val list =
-    DataClass("List", List('A.ntc), Nel(
-      Constructor("Cons", Ax, Parameter("xs", ConstructedOne("List", "A"))),
-      Constructor("Nil")
-    ))
+    DataClass("List",
+              List('A.ntc),
+              Nel(
+                Constructor("Cons", Ax, Parameter("xs", ConstructedOne("List", "A"))),
+                Constructor("Nil")
+              ))
 
   // polymorphic over two parameters
   val either =
-    DataClass("Either", List('A.ntc, 'B.ntc), Nel(
-      Constructor("Left", Ax),
-      Constructor("Right", Parameter("x", B))
-    ))
+    DataClass("Either",
+              List('A.ntc, 'B.ntc),
+              Nel(
+                Constructor("Left", Ax),
+                Constructor("Right", Parameter("x", B))
+              ))
 
   /**
-   * In Haskell, a constructor can have same name as the data type.
-   *
-   * In Scala, this can be true for nullary constructors (case objects) but not for
-   * other constructors (case classes).
-   */
+    * In Haskell, a constructor can have same name as the data type.
+    *
+    * In Scala, this can be true for nullary constructors (case objects) but not for
+    * other constructors (case classes).
+    */
   // example of one constructor
   val nel =
-    DataClass("NonEmptyList", List('A.ntc), Nel(
-      Constructor("Nel", Ax, Parameter("xs", ConstructedOne("List", "A")))
-    ))
+    DataClass("NonEmptyList",
+              List('A.ntc),
+              Nel(
+                Constructor("Nel", Ax, Parameter("xs", ConstructedOne("List", "A")))
+              ))
 
   val functor =
     TypeClass
@@ -90,7 +100,7 @@ object Run extends App {
     println("\n--\n")
   }
 
-  def show[A, B : ShadowShow](c: Transpiler[A, B])(x: A): Unit =
+  def show[A, B: ShadowShow](c: Transpiler[A, B])(x: A): Unit =
     println {
       x |>
         c.transpile |>

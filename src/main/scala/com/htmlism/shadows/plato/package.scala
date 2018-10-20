@@ -6,8 +6,8 @@ package object plato {
   type Nel[A] = NonEmptyList[A]
   val Nel = NonEmptyList
 
-  val A = BasicType("A")
-  val B = BasicType("B")
+  val A  = BasicType("A")
+  val B  = BasicType("B")
   val FA = ConstructedOne("F", "A")
   val FB = ConstructedOne("F", "B")
 

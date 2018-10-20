@@ -12,14 +12,17 @@ object HaskellCompiler extends Transpiler[plato.DataClass, DataDeclaration] {
   }
 
   private def consToCons(cons: plato.Constructor): Constructor =
-    Constructor(cons.name, cons.parameters.map(_.sig).map {
-      case plato.BasicType(s) =>
-        haskell.Proper(s.toLowerCase)
+    Constructor(
+      cons.name,
+      cons.parameters.map(_.sig).map {
+        case plato.BasicType(s) =>
+          haskell.Proper(s.toLowerCase)
 
-      case plato.ConstructedOne(f, a) =>
-        haskell.ConstructedOne(f, a.toLowerCase)
+        case plato.ConstructedOne(f, a) =>
+          haskell.ConstructedOne(f, a.toLowerCase)
 
-      case plato.FunctionConsType(a, b) =>
-        throw new IllegalStateException
-    })
+        case plato.FunctionConsType(a, b) =>
+          throw new IllegalStateException
+      }
+    )
 }

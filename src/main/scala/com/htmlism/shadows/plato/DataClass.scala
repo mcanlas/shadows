@@ -10,6 +10,6 @@ object Constructor {
 case class Constructor(name: String, parameters: List[Parameter])
 
 /**
- * @param name Not used in Haskell.
- */
+  * @param name Not used in Haskell.
+  */
 case class Parameter(name: String, sig: TypeSignature)

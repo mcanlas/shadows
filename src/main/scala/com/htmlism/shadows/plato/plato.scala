@@ -26,13 +26,13 @@ sealed trait Kind {
   def name: String
 }
 
-sealed trait Star extends Kind
+sealed trait Star     extends Kind
 sealed trait StarStar extends Kind
 
 case class NullaryTypeConstructor(name: String) extends Star
-case class UnaryTypeConstructor(name: String) extends StarStar
+case class UnaryTypeConstructor(name: String)   extends StarStar
 
-case class ConstrainedNtc(name: String, constraint: OverStar) extends Star
+case class ConstrainedNtc(name: String, constraint: OverStar)     extends Star
 case class ConstrainedUtc(name: String, constraint: OverStarStar) extends StarStar
 
 object Method {
@@ -48,7 +48,7 @@ sealed trait TypeSignature {
 
 sealed trait TerminalTypeSignature extends TypeSignature
 
-case class BasicType(name: String) extends TerminalTypeSignature
+case class BasicType(name: String)              extends TerminalTypeSignature
 case class ConstructedOne(f: String, a: String) extends TerminalTypeSignature
 
 case class FunctionConsType(a: TypeSignature, b: TypeSignature) extends TypeSignature

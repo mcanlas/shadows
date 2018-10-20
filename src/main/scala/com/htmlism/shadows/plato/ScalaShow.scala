@@ -30,9 +30,9 @@ object ScalaShow {
         c.parameters
           .map(_.sig)
           .map {
-            case BasicType(s) => s
+            case BasicType(s)         => s
             case ConstructedOne(f, a) => s"$f[$a]"
-            case _ => throw new IllegalStateException
+            case _                    => throw new IllegalStateException
           }
           .map(t => s"_: $t")
           .mkString(", ")

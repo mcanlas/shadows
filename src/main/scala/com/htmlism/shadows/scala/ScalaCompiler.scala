@@ -1,12 +1,12 @@
 package com.htmlism.shadows
 package scala
 
-import com.htmlism.shadows.plato.{ DataClass, TypeSignature }
+import com.htmlism.shadows.plato.{DataClass, TypeSignature}
 
 /**
- * Possible degenerate case. If a data class only has one constructor, it doesn't need
- * a separate trait in addition to its constructor.
- */
+  * Possible degenerate case. If a data class only has one constructor, it doesn't need
+  * a separate trait in addition to its constructor.
+  */
 object ScalaCompiler extends Transpiler[plato.DataClass, List[Template]] {
   def transpile(a: DataClass): List[Template] =
     sealedTrait(a) ++ constructors(a)
@@ -20,26 +20,28 @@ object ScalaCompiler extends Transpiler[plato.DataClass, List[Template]] {
   }
 
   private def constructors(a: DataClass) =
-    a.constructors.map { c =>
-      val supers =
-        if (a.typeParameters.isEmpty)
-          List(a.name)
-        else
-          List(a.name + "[]")
+    a.constructors
+      .map { c =>
+        val supers =
+          if (a.typeParameters.isEmpty)
+            List(a.name)
+          else
+            List(a.name + "[]")
 
-      if (c.parameters.isEmpty) {
-        ScalaObject(c.name, isCase = true, typeParameters = Nil, supers)
-      } else {
-        val parameters =
-          c
-            .parameters
-            .map{ p =>
-              p.name + ": " + sigToStr(p.sig)
-            }
+        if (c.parameters.isEmpty) {
+          ScalaObject(c.name, isCase = true, typeParameters = Nil, supers)
+        } else {
+          val parameters =
+            c.parameters
+              .map { p =>
+                p.name + ": " + sigToStr(p.sig)
+              }
 
-        ScalaClass(c.name, isCase = true, typeParameters = Nil, supers, parameters)
+          ScalaClass(c.name, isCase = true, typeParameters = Nil, supers, parameters)
+        }
       }
-    }.list.toList
+      .list
+      .toList
 
   private def sigToStr(sig: TypeSignature): String =
     sig match {

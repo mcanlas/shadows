@@ -6,4 +6,4 @@ sealed trait TypeConstraint {
 
 case class UnconstrainedType(name: String) extends TypeConstraint
 
-case class ConstrainedType(constraint: String, name:String) extends TypeConstraint
+case class ConstrainedType(constraint: String, name: String) extends TypeConstraint
