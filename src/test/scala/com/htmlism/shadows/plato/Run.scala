@@ -100,6 +100,15 @@ object Run extends App {
     println("\n--\n")
   }
 
+  /**
+    * Prints translated source code given a transpiler and some code.
+    *
+    * @param c A transpiler from language `A` to language `B`
+    * @param x An expression in language `A`
+    *
+    * @tparam A A source language
+    * @tparam B A destination language
+    */
   def show[A, B: ShadowShow](c: Transpiler[A, B])(x: A): Unit =
     println {
       x |>
