@@ -4,7 +4,7 @@ package plato
 import scalaz._, Scalaz._
 
 object Run extends App {
-  val boolean =
+  private val boolean =
     DataClass("Boolean",
               Nil,
               Nel(
@@ -13,7 +13,7 @@ object Run extends App {
               ))
 
   // polymorphic
-  val option =
+  private val option =
     DataClass("Option",
               List('A.ntc),
               Nel(
@@ -22,7 +22,7 @@ object Run extends App {
               ))
 
   // polymorphic
-  val list =
+  private val list =
     DataClass("List",
               List('A.ntc),
               Nel(
@@ -31,7 +31,7 @@ object Run extends App {
               ))
 
   // polymorphic over two parameters
-  val either =
+  private val either =
     DataClass("Either",
               List('A.ntc, 'B.ntc),
               Nel(
@@ -46,34 +46,34 @@ object Run extends App {
     * other constructors (case classes).
     */
   // example of one constructor
-  val nel =
+  private val nel =
     DataClass("NonEmptyList",
               List('A.ntc),
               Nel(
                 Constructor("Nel", Ax, Parameter("xs", ConstructedOne("List", "A")))
               ))
 
-  val functor =
+  private val functor =
     TypeClass
       .k1("Functor", 'F.utc)
       .w(Method("map", FA =>: (A =>: B) =>: FB))
 
-  val applicative =
+  private val applicative =
     TypeClass
       .k1("Applicative", ConstrainedUtc("F", functor))
       .w(Method("pure", A =>: FA))
 
-  val monad =
+  private val monad =
     TypeClass
       .k1("Monad", ConstrainedUtc("F", applicative))
       .w(Method("flatMap", FA =>: (A =>: FB) =>: FB))
 
-  val semigroup =
+  private val semigroup =
     TypeClass
       .k0("Semigroup", 'A.ntc)
       .w(Method("plus", A =>: A =>: A))
 
-  val monoid =
+  private val monoid =
     TypeClass
       .k0("Monoid", ConstrainedNtc("A", semigroup))
       .w(Method("zero", A))
@@ -100,6 +100,15 @@ object Run extends App {
     println("\n--\n")
   }
 
+  /**
+    * Prints translated source code given a transpiler and some code.
+    *
+    * @param c A transpiler from language `A` to language `B`
+    * @param x An expression in language `A`
+    *
+    * @tparam A A source language
+    * @tparam B A destination language
+    */
   def show[A, B: ShadowShow](c: Transpiler[A, B])(x: A): Unit =
     println {
       x |>
