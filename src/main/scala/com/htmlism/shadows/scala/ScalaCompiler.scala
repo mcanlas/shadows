@@ -52,10 +52,10 @@ object ScalaCompiler extends Transpiler[plato.DataClass, List[Template]] {
         s
 
       case plato.ConstructedLiteral(f, a) =>
-        s"$f[$a]"
+        s"$f[${sigToStr(a)}]"
 
       case plato.ConstructedVariable(f, a) =>
-        s"$f[$a]"
+        s"$f[${sigToStr(a)}]"
 
       case plato.FunctionConsType(a, b) =>
         sigToStr(a) + " => " + sigToStr(b)
