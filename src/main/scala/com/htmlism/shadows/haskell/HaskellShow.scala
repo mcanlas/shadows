@@ -18,14 +18,17 @@ object HaskellShow extends ShadowShow[DataDeclaration] {
         ""
       else
         " " + c.arguments
-          .map {
-            case haskell.Proper(s) =>
-              s
-            case haskell.ConstructedOne(f, a) =>
-              s"($f $a)"
-          }
+          .map(showTs)
           .mkString(" ")
 
     s"${c.name}$parameters"
   }
+
+  private def showTs(ts: TypeSignature): String =
+    ts match {
+      case haskell.Proper(s) =>
+        s
+      case haskell.ConstructedOne(f, a) =>
+        s"($f ${showTs(a)})"
+    }
 }
