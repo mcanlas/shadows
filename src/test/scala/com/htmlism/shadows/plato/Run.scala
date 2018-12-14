@@ -118,13 +118,15 @@ object Run extends App {
 
   writer("generated.hs") { hs =>
     writer("generated.scala") { sc =>
+      sc.println("package donotcollide")
+
       List(boolean, option, list, either, nel)
         .foreach { d =>
           show(haskell.HaskellCompiler, d, hs)
           hs.println
 
-          show(scala.ScalaCompiler, d, sc)
           sc.println("\n//\n")
+          show(scala.ScalaCompiler, d, sc)
         }
     }
   }

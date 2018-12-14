@@ -1,3 +1,7 @@
+package donotcollide
+
+//
+
 sealed trait Boolean
 
 case object True extends Boolean
@@ -33,6 +37,3 @@ case class Right(x: B) extends Either[]
 sealed trait NonEmptyList[+A]
 
 case class Nel(x: A, xs: List[A]) extends NonEmptyList[]
-
-//
-
