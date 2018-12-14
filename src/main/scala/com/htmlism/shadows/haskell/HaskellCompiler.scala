@@ -15,11 +15,17 @@ object HaskellCompiler extends Transpiler[plato.DataClass, DataDeclaration] {
     Constructor(
       cons.name,
       cons.parameters.map(_.sig).map {
-        case plato.BasicType(s) =>
+        case plato.TypeLiteral(s) =>
           haskell.Proper(s.toLowerCase)
 
-        case plato.ConstructedOne(f, a) =>
-          haskell.ConstructedOne(f, a.toLowerCase)
+        case plato.TypeVariable(s) =>
+          haskell.Proper(s.toLowerCase)
+
+        case plato.ConstructedLiteral(f, a) =>
+          haskell.ConstructedOne(f, "yy")
+
+        case plato.ConstructedVariable(f, a) =>
+          haskell.ConstructedOne(f, "xx")
 
         case plato.FunctionConsType(a, b) =>
           throw new IllegalStateException

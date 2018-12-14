@@ -48,7 +48,9 @@ sealed trait TypeSignature {
 
 sealed trait TerminalTypeSignature extends TypeSignature
 
-case class BasicType(name: String)              extends TerminalTypeSignature
-case class ConstructedOne(f: String, a: String) extends TerminalTypeSignature
+case class TypeLiteral(name: String)                             extends TerminalTypeSignature
+case class TypeVariable(name: String)                            extends TerminalTypeSignature
+case class ConstructedLiteral(name: String, arg: TypeSignature)  extends TerminalTypeSignature
+case class ConstructedVariable(name: String, arg: TypeSignature) extends TerminalTypeSignature
 
 case class FunctionConsType(a: TypeSignature, b: TypeSignature) extends TypeSignature

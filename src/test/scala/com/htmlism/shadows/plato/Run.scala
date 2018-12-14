@@ -28,7 +28,7 @@ object Run extends App {
     DataClass("List",
               List('A.ntc),
               Nel(
-                Constructor("Cons", Ax, Parameter("xs", ConstructedOne("List", "A"))),
+                Constructor("Cons", Ax, Parameter("xs", ConstructedLiteral("List", A))),
                 Constructor("Nil")
               ))
 
@@ -52,7 +52,7 @@ object Run extends App {
     DataClass("NonEmptyList",
               List('A.ntc),
               Nel(
-                Constructor("Nel", Ax, Parameter("xs", ConstructedOne("List", "A")))
+                Constructor("Nel", Ax, Parameter("xs", ConstructedLiteral("List", A)))
               ))
 
   private val functor =

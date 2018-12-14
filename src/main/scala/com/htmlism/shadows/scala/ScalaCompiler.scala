@@ -45,10 +45,16 @@ object ScalaCompiler extends Transpiler[plato.DataClass, List[Template]] {
 
   private def sigToStr(sig: TypeSignature): String =
     sig match {
-      case plato.BasicType(s) =>
+      case plato.TypeLiteral(s) =>
         s
 
-      case plato.ConstructedOne(f, a) =>
+      case plato.TypeVariable(s) =>
+        s
+
+      case plato.ConstructedLiteral(f, a) =>
+        s"$f[$a]"
+
+      case plato.ConstructedVariable(f, a) =>
         s"$f[$a]"
 
       case plato.FunctionConsType(a, b) =>

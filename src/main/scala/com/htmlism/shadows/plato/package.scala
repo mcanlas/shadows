@@ -6,10 +6,10 @@ package object plato {
   type Nel[A] = NonEmptyList[A]
   val Nel = NonEmptyList
 
-  val A  = BasicType("A")
-  val B  = BasicType("B")
-  val FA = ConstructedOne("F", "A")
-  val FB = ConstructedOne("F", "B")
+  val A  = TypeVariable("A")
+  val B  = TypeVariable("B")
+  val FA = ConstructedVariable("F", A)
+  val FB = ConstructedVariable("F", B)
 
   val Ax = Parameter("x", A)
 
