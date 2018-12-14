@@ -125,7 +125,7 @@ object Run extends App {
       List(boolean, option, list, either, nel)
         .foreach { d =>
           show(haskell.HaskellCompiler, d, hs)
-          hs.println
+          hs.println()
 
           sc.println("\n//\n")
           show(scala.ScalaCompiler, d, sc)
