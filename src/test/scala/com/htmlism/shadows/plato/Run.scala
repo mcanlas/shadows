@@ -109,21 +109,29 @@ object Run extends App {
     * @tparam A A source language
     * @tparam B A destination language
     */
-  def show[A, B: ShadowShow](c: Transpiler[A, B])(x: A): Unit =
-    println {
+  def show[A, B: ShadowShow](c: Transpiler[A, B], x: A, out: java.io.PrintWriter): Unit =
+    out.println {
       x |>
         c.transpile |>
         implicitly[ShadowShow[B]].show
     }
 
-  List(boolean, option, list, either, nel)
-    .foreach { d =>
-      println("\n------\n")
+  writer("generated.hs") { hs =>
+    writer("generated.scala") { sc =>
+      List(boolean, option, list, either, nel)
+        .foreach { d =>
+          show(haskell.HaskellCompiler, d, hs)
+          hs.println
 
-      show(haskell.HaskellCompiler)(d)
-
-      println("\n--\n")
-
-      show(scala.ScalaCompiler)(d)
+          show(scala.ScalaCompiler, d, sc)
+          sc.println("\n//\n")
+        }
     }
+  }
+
+  private def writer(s: String)(f: java.io.PrintWriter => Unit): Unit = {
+    val out = new java.io.PrintWriter("src/main/resources/" + s)
+    f(out)
+    out.close()
+  }
 }
