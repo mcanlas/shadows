@@ -18,5 +18,5 @@ object Examples {
 
   private val nel =
     DataDeclaration("NonEmptyList", List(), Nil)
-      .cons("NonEmptyList", Proper("a"), ConstructedOne("List", "a"))
+      .cons("NonEmptyList", Proper("a"), ConstructedOne("List", Proper("a")))
 }
