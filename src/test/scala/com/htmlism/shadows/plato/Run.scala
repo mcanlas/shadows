@@ -1,6 +1,8 @@
 package com.htmlism.shadows
 package plato
 
+import java.io.PrintWriter
+
 import scalaz._, Scalaz._
 
 object Run extends App {
@@ -109,7 +111,7 @@ object Run extends App {
     * @tparam A A source language
     * @tparam B A destination language
     */
-  def show[A, B: ShadowShow](c: Transpiler[A, B], x: A, out: java.io.PrintWriter): Unit =
+  def show[A, B: ShadowShow](c: Transpiler[A, B], x: A, out: PrintWriter): Unit =
     out.println {
       x |>
         c.transpile |>
@@ -131,7 +133,7 @@ object Run extends App {
     }
   }
 
-  private def writer(s: String)(f: java.io.PrintWriter => Unit): Unit = {
+  private def writer(s: String)(f: PrintWriter => Unit): Unit = {
     val out = new java.io.PrintWriter("src/main/resources/" + s)
     f(out)
     out.close()
