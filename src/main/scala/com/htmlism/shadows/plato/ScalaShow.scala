@@ -10,7 +10,7 @@ object ScalaShow {
   implicit val ssDataClass: ScalaShow[DataClass] =
     new ScalaShow[DataClass] {
       def show(x: DataClass): String = {
-        val typeParameters = x.typeParameters.map(_.name).mkString(", ")
+        val typeParameters = x.typeRegistry.mkString(", ")
 
         val constructors =
           x.constructors.map(cToStr(x)).toList

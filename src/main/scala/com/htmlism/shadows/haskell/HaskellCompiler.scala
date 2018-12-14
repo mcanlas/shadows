@@ -3,7 +3,7 @@ package haskell
 
 object HaskellCompiler extends Transpiler[plato.DataClass, DataDeclaration] {
   def transpile(a: plato.DataClass): DataDeclaration = {
-    val base = DataDeclaration(a.name, a.typeParameters.map(_.name.toLowerCase): _*)
+    val base = DataDeclaration(a.name, a.typeRegistry.map(_.toLowerCase): _*)
 
     val withCons =
       a.constructors.list.foldLeft(base)((b, tc) => b.copy(constructors = b.constructors :+ consToCons(tc)))

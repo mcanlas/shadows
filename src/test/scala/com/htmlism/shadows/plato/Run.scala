@@ -8,7 +8,6 @@ import scalaz._, Scalaz._
 object Run extends App {
   private val boolean =
     DataClass("Boolean",
-              Nil,
               Nel(
                 Constructor("True"),
                 Constructor("False")
@@ -17,7 +16,6 @@ object Run extends App {
   // polymorphic
   private val option =
     DataClass("Option",
-              List('A.ntc),
               Nel(
                 Constructor("Some", Ax),
                 Constructor("None")
@@ -26,7 +24,6 @@ object Run extends App {
   // polymorphic
   private val list =
     DataClass("List",
-              List('A.ntc),
               Nel(
                 Constructor("Cons", Ax, Parameter("xs", ConstructedLiteral("List", A))),
                 Constructor("Nil")
@@ -35,7 +32,6 @@ object Run extends App {
   // polymorphic over two parameters
   private val either =
     DataClass("Either",
-              List('A.ntc, 'B.ntc),
               Nel(
                 Constructor("Left", Ax),
                 Constructor("Right", Parameter("x", B))
@@ -50,7 +46,6 @@ object Run extends App {
   // example of one constructor
   private val nel =
     DataClass("NonEmptyList",
-              List('A.ntc),
               Nel(
                 Constructor("Nel", Ax, Parameter("xs", ConstructedLiteral("List", A)))
               ))
