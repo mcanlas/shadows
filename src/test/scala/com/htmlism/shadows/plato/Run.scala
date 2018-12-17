@@ -1,6 +1,8 @@
 package com.htmlism.shadows
 package plato
 
+import java.io.PrintWriter
+
 import scalaz._, Scalaz._
 
 object Run extends App {
@@ -109,21 +111,31 @@ object Run extends App {
     * @tparam A A source language
     * @tparam B A destination language
     */
-  def show[A, B: ShadowShow](c: Transpiler[A, B])(x: A): Unit =
-    println {
+  def show[A, B: ShadowShow](c: Transpiler[A, B], x: A, out: PrintWriter): Unit =
+    out.println {
       x |>
         c.transpile |>
         implicitly[ShadowShow[B]].show
     }
 
-  List(boolean, option, list, either, nel)
-    .foreach { d =>
-      println("\n------\n")
+  writer("generated.hs") { hs =>
+    writer("generated.scala") { sc =>
+      sc.println("package donotcollide")
 
-      show(haskell.HaskellCompiler)(d)
+      List(boolean, option, list, either, nel)
+        .foreach { d =>
+          show(haskell.HaskellCompiler, d, hs)
+          hs.println()
 
-      println("\n--\n")
-
-      show(scala.ScalaCompiler)(d)
+          sc.println("\n//\n")
+          show(scala.ScalaCompiler, d, sc)
+        }
     }
+  }
+
+  private def writer(s: String)(f: PrintWriter => Unit): Unit = {
+    val out = new java.io.PrintWriter("src/main/resources/" + s)
+    f(out)
+    out.close()
+  }
 }
