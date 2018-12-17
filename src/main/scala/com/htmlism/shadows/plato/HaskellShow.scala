@@ -62,10 +62,16 @@ object HaskellShow {
       case FunctionConsType(a, b) =>
         s"(${tsToStr(a)} -> ${tsToStr(b)})"
 
-      case ConstructedOne(f, a) =>
-        f.toLowerCase + " " + a.toLowerCase
+      case ConstructedLiteral(f, a) =>
+        f.toLowerCase + " " + tsToStr(a)
 
-      case BasicType(s) =>
+      case ConstructedVariable(f, a) =>
+        f.toLowerCase + " " + tsToStr(a)
+
+      case TypeLiteral(s) =>
+        s.toLowerCase
+
+      case TypeVariable(s) =>
         s.toLowerCase
     }
 }

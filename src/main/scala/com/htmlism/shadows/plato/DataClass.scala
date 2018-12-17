@@ -1,6 +1,33 @@
 package com.htmlism.shadows.plato
 
-case class DataClass(name: String, typeParameters: List[NullaryTypeConstructor], constructors: Nel[Constructor])
+object DataClass {
+  def typeRegistry(dc: DataClass): List[String] =
+    dc.constructors.list.toList
+      .flatMap(typeRegistry)
+      .distinct
+
+  def typeRegistry(con: Constructor): List[String] =
+    con.parameters
+      .map(_.sig)
+      .flatMap(typeRegistry)
+
+  def typeRegistry(ts: TypeSignature): List[String] =
+    ts match {
+      case TypeVariable(x) =>
+        List(x)
+
+      case FunctionConsType(f, g) =>
+        typeRegistry(f) ::: typeRegistry(g)
+
+      case _ =>
+        Nil
+    }
+}
+
+case class DataClass(name: String, constructors: Nel[Constructor]) {
+  lazy val typeRegistry: List[String] =
+    DataClass.typeRegistry(this)
+}
 
 object Constructor {
   def apply(name: String, typeSignatures: Parameter*): Constructor =

@@ -12,7 +12,7 @@ object ScalaCompiler extends Transpiler[plato.DataClass, List[Template]] {
     sealedTrait(a) ++ constructors(a)
 
   private def sealedTrait(a: DataClass) = {
-    val tps = a.typeParameters.map("+" + _.name)
+    val tps = a.typeRegistry.map("+" + _)
 
     List {
       Trait(a.name, isSealed = true, typeParameters = tps, supers = Nil)
@@ -23,10 +23,24 @@ object ScalaCompiler extends Transpiler[plato.DataClass, List[Template]] {
     a.constructors
       .map { c =>
         val supers =
-          if (a.typeParameters.isEmpty)
+          if (a.typeRegistry.isEmpty)
             List(a.name)
-          else
-            List(a.name + "[]")
+          else {
+            val slug =
+              a.constructors.list.toList
+                .flatMap { c2 =>
+                  if (c2 == c)
+                    DataClass
+                      .typeRegistry(c2)
+                  else
+                    DataClass
+                      .typeRegistry(c2)
+                      .map(_ => "Nothing")
+                }
+                .mkString(", ")
+
+            List(a.name + s"[$slug]")
+          }
 
         if (c.parameters.isEmpty) {
           ScalaObject(c.name, isCase = true, typeParameters = Nil, supers)
@@ -37,7 +51,7 @@ object ScalaCompiler extends Transpiler[plato.DataClass, List[Template]] {
                 p.name + ": " + sigToStr(p.sig)
               }
 
-          ScalaClass(c.name, isCase = true, typeParameters = Nil, supers, parameters)
+          ScalaClass(c.name, isCase = true, typeParameters = DataClass.typeRegistry(c), supers, parameters)
         }
       }
       .list
@@ -45,11 +59,17 @@ object ScalaCompiler extends Transpiler[plato.DataClass, List[Template]] {
 
   private def sigToStr(sig: TypeSignature): String =
     sig match {
-      case plato.BasicType(s) =>
+      case plato.TypeLiteral(s) =>
         s
 
-      case plato.ConstructedOne(f, a) =>
-        s"$f[$a]"
+      case plato.TypeVariable(s) =>
+        s
+
+      case plato.ConstructedLiteral(f, a) =>
+        s"$f[${sigToStr(a)}]"
+
+      case plato.ConstructedVariable(f, a) =>
+        s"$f[${sigToStr(a)}]"
 
       case plato.FunctionConsType(a, b) =>
         sigToStr(a) + " => " + sigToStr(b)

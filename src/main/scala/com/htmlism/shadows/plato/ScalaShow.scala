@@ -10,7 +10,7 @@ object ScalaShow {
   implicit val ssDataClass: ScalaShow[DataClass] =
     new ScalaShow[DataClass] {
       def show(x: DataClass): String = {
-        val typeParameters = x.typeParameters.map(_.name).mkString(", ")
+        val typeParameters = x.typeRegistry.mkString(", ")
 
         val constructors =
           x.constructors.map(cToStr(x)).toList
@@ -30,9 +30,11 @@ object ScalaShow {
         c.parameters
           .map(_.sig)
           .map {
-            case BasicType(s)         => s
-            case ConstructedOne(f, a) => s"$f[$a]"
-            case _                    => throw new IllegalStateException
+            case TypeLiteral(s)            => s
+            case TypeVariable(s)           => s
+            case ConstructedLiteral(f, a)  => s"$f[$a]"
+            case ConstructedVariable(f, a) => s"$f[$a]"
+            case _                         => throw new IllegalStateException
           }
           .map(t => s"_: $t")
           .mkString(", ")
