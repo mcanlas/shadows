@@ -89,14 +89,6 @@ object Run extends App {
     println
   }
 
-  for (tc <- List(option, list, either, nel)) {
-    println {
-      implicitly[ScalaShow[DataClass]].show(tc)
-    }
-
-    println("\n--\n")
-  }
-
   /**
     * Prints translated source code given a transpiler and some code.
     *
