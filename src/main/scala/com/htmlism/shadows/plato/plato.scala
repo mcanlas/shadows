@@ -34,9 +34,3 @@ case class UnaryTypeConstructor(name: String)   extends StarStar
 
 case class ConstrainedNtc(name: String, constraint: OverStar)     extends Star
 case class ConstrainedUtc(name: String, constraint: OverStarStar) extends StarStar
-
-object Method {
-  def apply(name: String, signature: TypeSignature): Method =
-    Method(name, None, signature)
-}
-case class Method(name: String, symbolicAlias: Option[String], signature: TypeSignature)
