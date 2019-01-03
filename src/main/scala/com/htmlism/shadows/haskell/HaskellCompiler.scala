@@ -1,8 +1,13 @@
 package com.htmlism.shadows
 package haskell
 
-object HaskellCompiler extends Transpiler[plato.DataClass, DataDeclaration] {
-  def transpile(a: plato.DataClass): List[DataDeclaration] = {
+object HaskellCompiler extends Transpiler[plato.PlatonicConstruct, DataDeclaration] {
+  def transpile(a: plato.PlatonicConstruct): List[DataDeclaration] =
+    a match {
+      case dc @ plato.DataClass(_, _) => transpileDc(dc)
+    }
+
+  private def transpileDc(a: plato.DataClass) = {
     val base = DataDeclaration(a.name, a.typeRegistry.map(_.toLowerCase): _*)
 
     val withCons =

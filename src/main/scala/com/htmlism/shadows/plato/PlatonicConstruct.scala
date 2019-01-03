@@ -1,5 +1,7 @@
 package com.htmlism.shadows.plato
 
+sealed trait PlatonicConstruct
+
 object DataClass {
   def typeRegistry(dc: DataClass): List[String] =
     dc.constructors.list.toList
@@ -24,7 +26,7 @@ object DataClass {
     }
 }
 
-case class DataClass(name: String, constructors: Nel[Constructor]) {
+case class DataClass(name: String, constructors: Nel[Constructor]) extends PlatonicConstruct {
   lazy val typeRegistry: List[String] =
     DataClass.typeRegistry(this)
 }
