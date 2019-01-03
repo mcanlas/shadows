@@ -6,5 +6,6 @@ scalafmtOnCompile := true
 
 // scaladoc enhancements
 scalacOptions in (Compile, doc) ++= Seq(
+  "-groups",  // enable support for grouped members
   "-diagrams" // generate type hierarchy diagrams
 )
