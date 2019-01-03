@@ -2,13 +2,13 @@ package com.htmlism.shadows
 package haskell
 
 object HaskellCompiler extends Transpiler[plato.DataClass, DataDeclaration] {
-  def transpile(a: plato.DataClass): DataDeclaration = {
+  def transpile(a: plato.DataClass): List[DataDeclaration] = {
     val base = DataDeclaration(a.name, a.typeRegistry.map(_.toLowerCase): _*)
 
     val withCons =
       a.constructors.list.foldLeft(base)((b, tc) => b.copy(constructors = b.constructors :+ consToCons(tc)))
 
-    withCons
+    List(withCons)
   }
 
   private def consToCons(cons: plato.Constructor): Constructor =

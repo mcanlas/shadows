@@ -99,11 +99,9 @@ object Run extends App {
     * @tparam B A destination language
     */
   def show[A, B: ShadowShow](c: Transpiler[A, B], x: A, out: PrintWriter): Unit =
-    out.println {
-      x |>
-        c.transpile |>
-        implicitly[ShadowShow[B]].show
-    }
+    (x |> c.transpile)
+      .map(implicitly[ShadowShow[B]].show)
+      .mkString("\n\n") |> out.println
 
   writer("generated.hs") { hs =>
     writer("generated.scala") { sc =>
