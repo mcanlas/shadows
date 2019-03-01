@@ -1,8 +1,13 @@
 package com.htmlism.shadows
 package haskell
 
-object HaskellShow extends ShadowShow[DataDeclaration] {
-  def show(x: DataDeclaration): String = {
+object HaskellShow extends ShadowShow[TopDeclaration] {
+  def show(x: TopDeclaration): String =
+    x match {
+      case d: DataDeclaration => dataShow(d)
+    }
+
+  def dataShow(x: DataDeclaration): String = {
     val constructors = x.constructors.map(cToStr).mkString(" | ")
 
     val left =

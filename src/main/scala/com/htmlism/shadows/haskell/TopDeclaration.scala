@@ -1,14 +1,19 @@
 package com.htmlism.shadows
 package haskell
 
-object DataDeclaration {
-  implicit val haskellShow: ShadowShow[DataDeclaration] = HaskellShow
+sealed trait TopDeclaration
 
+object TopDeclaration {
+  implicit val haskellShow: ShadowShow[TopDeclaration] = HaskellShow
+}
+
+object DataDeclaration {
   def apply(s: String, tps: String*): DataDeclaration =
     DataDeclaration(s, tps.toList, Nil)
 }
 
-case class DataDeclaration(name: String, typeParameters: List[String], constructors: List[Constructor]) {
+case class DataDeclaration(name: String, typeParameters: List[String], constructors: List[Constructor])
+    extends TopDeclaration {
   def cons(s: String): DataDeclaration =
     copy(constructors = constructors :+ Constructor(s, Nil))
 
