@@ -13,3 +13,5 @@ case class ConstructedLiteral(name: String, arg: TypeSignature)  extends Termina
 case class ConstructedVariable(name: String, arg: TypeSignature) extends TerminalTypeSignature
 
 case class FunctionConsType(a: TypeSignature, b: TypeSignature) extends TypeSignature
+
+// TODO a dedicated tuple2 type might go here
