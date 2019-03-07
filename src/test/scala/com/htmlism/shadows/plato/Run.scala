@@ -50,6 +50,16 @@ object Run extends App {
                 Constructor("Nel", Ax, Parameter("xs", ConstructedLiteral("List", A)))
               ))
 
+  private val json =
+    DataClass("JsonValue",
+              Nel(
+                Constructor("JNull"),
+                Constructor("JBool"),
+                Constructor("JString"),
+                Constructor("JArray"),
+                Constructor("JObject")
+              ))
+
   private val functor =
     TypeClass
       .k1("Functor", 'F.utc)
@@ -107,7 +117,7 @@ object Run extends App {
     writer("generated.scala") { sc =>
       sc.println("package donotcollide")
 
-      List(boolean, option, list, either, nel)
+      List(boolean, option, list, either, nel, json)
         .foreach { d =>
           show(haskell.HaskellCompiler, d, hs)
           hs.println()

@@ -37,3 +37,17 @@ case class Right[B](x: B) extends Either[Nothing, B]
 sealed trait NonEmptyList[+A]
 
 case class Nel[A](x: A, xs: List[A]) extends NonEmptyList[A]
+
+//
+
+sealed trait JsonValue
+
+case object JNull extends JsonValue
+
+case object JBool extends JsonValue
+
+case object JString extends JsonValue
+
+case object JArray extends JsonValue
+
+case object JObject extends JsonValue
