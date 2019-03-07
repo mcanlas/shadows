@@ -51,14 +51,16 @@ object Run extends App {
               ))
 
   private val json =
-    DataClass("JsonValue",
-              Nel(
-                Constructor("JNull"),
-                Constructor("JBool"),
-                Constructor("JString"),
-                Constructor("JArray"),
-                Constructor("JObject")
-              ))
+    DataClass(
+      "JsonValue",
+      Nel(
+        Constructor("JNull"),
+        Constructor("JBool", Parameter("b", TypeLiteral("Boolean"))),
+        Constructor("JString", Parameter("s", TypeLiteral("String"))),
+        Constructor("JArray"),
+        Constructor("JObject")
+      )
+    )
 
   private val functor =
     TypeClass

@@ -25,7 +25,7 @@ object HaskellCompiler extends Transpiler[plato.PlatonicConstruct, TopDeclaratio
   private def ts2ts(x: plato.TypeSignature): TypeSignature =
     x match {
       case plato.TypeLiteral(s) =>
-        haskell.Proper(s.toLowerCase)
+        haskell.Proper(s)
 
       case plato.TypeVariable(s) =>
         haskell.Proper(s.toLowerCase)

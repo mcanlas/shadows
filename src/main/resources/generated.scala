@@ -44,9 +44,9 @@ sealed trait JsonValue
 
 case object JNull extends JsonValue
 
-case object JBool extends JsonValue
+case class JBool(b: Boolean) extends JsonValue
 
-case object JString extends JsonValue
+case class JString(s: String) extends JsonValue
 
 case object JArray extends JsonValue
 
