@@ -57,7 +57,7 @@ object Run extends App {
         Constructor("JNull"),
         Constructor("JBool", Parameter("b", TypeLiteral("Boolean"))),
         Constructor("JString", Parameter("s", TypeLiteral("String"))),
-        Constructor("JArray"),
+        Constructor("JArray", Parameter("xs", ConstructedLiteral("List", TypeLiteral("JsonValue")))),
         Constructor("JObject")
       )
     )

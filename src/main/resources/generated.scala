@@ -48,6 +48,6 @@ case class JBool(b: Boolean) extends JsonValue
 
 case class JString(s: String) extends JsonValue
 
-case object JArray extends JsonValue
+case class JArray(xs: List[JsonValue]) extends JsonValue
 
 case object JObject extends JsonValue
