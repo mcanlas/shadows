@@ -115,11 +115,14 @@ object Run extends App {
       .map(implicitly[ShadowShow[B]].show)
       .mkString("\n\n") |> out.println
 
+  val dataClasses =
+    List(boolean, option, list, either, nel, json)
+
   writer("generated.hs") { hs =>
     writer("generated.scala") { sc =>
       sc.println("package donotcollide")
 
-      List(boolean, option, list, either, nel, json)
+      dataClasses
         .foreach { d =>
           show(haskell.HaskellCompiler, d, hs)
           hs.println()
