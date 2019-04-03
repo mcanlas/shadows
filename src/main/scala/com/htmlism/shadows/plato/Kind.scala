@@ -38,11 +38,11 @@ case class UnaryTypeConstructor(name: String) extends StarStar
   *
   * @group Kinds
   */
-case class ConstrainedNtc(name: String, constraint: OverStar) extends Star
+case class ConstrainedNtc(name: String, constraint: TypeClassStar) extends Star
 
 /**
   * Like `F : Monad`.
   *
   * @group Kinds
   */
-case class ConstrainedUtc(name: String, constraint: OverStarStar) extends StarStar
+case class ConstrainedUtc(name: String, constraint: TypeClassStarStar) extends StarStar

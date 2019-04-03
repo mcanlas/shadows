@@ -12,7 +12,7 @@ object HaskellShow {
       def show(x: TypeClass): String = {
         val (left, right) =
           x match {
-            case OverStar(_, p, _) =>
+            case TypeClassStar(_, p, _) =>
               val constraint =
                 p match {
                   case NullaryTypeConstructor(s) =>
@@ -24,7 +24,7 @@ object HaskellShow {
 
               (constraint, x.name + " " + p.name.toLowerCase)
 
-            case OverStarStar(_, p, _) =>
+            case TypeClassStarStar(_, p, _) =>
               val constraint =
                 p match {
                   case UnaryTypeConstructor(s) =>
