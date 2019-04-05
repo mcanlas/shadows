@@ -25,3 +25,5 @@ case class DataDeclaration(name: String, typeParameters: List[String], construct
 }
 
 case class Constructor(name: String, arguments: List[TypeSignature])
+
+case class TypeClass(name: String, typeParameters: List[String], superTypes: List[TypeClass]) extends TopDeclaration
