@@ -5,6 +5,7 @@ object HaskellCompiler extends Transpiler[plato.PlatonicConstruct, TopDeclaratio
   def transpile(a: plato.PlatonicConstruct): List[TopDeclaration] =
     a match {
       case dc: plato.DataClass => transpileDc(dc)
+      case _: plato.TypeClass  => ???
     }
 
   private def transpileDc(a: plato.DataClass) = {
@@ -36,7 +37,7 @@ object HaskellCompiler extends Transpiler[plato.PlatonicConstruct, TopDeclaratio
       case plato.ConstructedVariable(f, a) =>
         haskell.ConstructedOne(f, ts2ts(a))
 
-      case plato.FunctionConsType(a, b) =>
+      case plato.FunctionConsType(_, _) =>
         throw new IllegalStateException
     }
 

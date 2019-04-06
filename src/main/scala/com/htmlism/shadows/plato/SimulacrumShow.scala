@@ -1,7 +1,5 @@
 package com.htmlism.shadows.plato
 
-import scalaz._, Scalaz._
-
 trait SimulacrumShow[A] {
   def show(x: A): String
 }
@@ -15,7 +13,7 @@ object SimulacrumShow {
             case TypeClassStar(_, p, _) =>
               val constraint =
                 p match {
-                  case NullaryTypeConstructor(s) =>
+                  case NullaryTypeConstructor(_) =>
                     ""
 
                   case ConstrainedNtc(s, c) =>
@@ -27,7 +25,7 @@ object SimulacrumShow {
             case TypeClassStarStar(_, p, _) =>
               val constraint =
                 p match {
-                  case UnaryTypeConstructor(s) =>
+                  case UnaryTypeConstructor(_) =>
                     ""
 
                   case ConstrainedUtc(s, c) =>
@@ -47,9 +45,6 @@ object SimulacrumShow {
       }
     }
 
-  private def toStr(m: Method) = {
-    val (args, ret) = m.signature |> linearize
-
+  private def toStr(m: Method) =
     "  def " + m.name + ": "
-  }
 }

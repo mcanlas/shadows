@@ -1,7 +1,7 @@
 package com.htmlism.shadows
 package scala
 
-import com.htmlism.shadows.plato.{DataClass, TypeSignature}
+import com.htmlism.shadows.plato.{DataClass, TypeClass, TypeSignature}
 
 /**
   * Possible degenerate case. If a data class only has one constructor, it doesn't need
@@ -11,6 +11,7 @@ object ScalaCompiler extends Transpiler[plato.PlatonicConstruct, Template] {
   def transpile(a: plato.PlatonicConstruct): List[Template] =
     a match {
       case dc @ DataClass(_, _) => transpileDc(dc)
+      case _: TypeClass         => ???
     }
 
   private def transpileDc(a: DataClass) =

@@ -15,7 +15,7 @@ object HaskellShow {
             case TypeClassStar(_, p, _) =>
               val constraint =
                 p match {
-                  case NullaryTypeConstructor(s) =>
+                  case NullaryTypeConstructor(_) =>
                     ""
 
                   case ConstrainedNtc(s, c) =>
@@ -27,7 +27,7 @@ object HaskellShow {
             case TypeClassStarStar(_, p, _) =>
               val constraint =
                 p match {
-                  case UnaryTypeConstructor(s) =>
+                  case UnaryTypeConstructor(_) =>
                     ""
 
                   case ConstrainedUtc(s, c) =>
