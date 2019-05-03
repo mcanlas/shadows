@@ -3,12 +3,12 @@ package plato
 
 import java.io.PrintWriter
 
-import scalaz._, Scalaz._
+import mouse.any._
 
 object Run extends App {
   private val boolean =
     DataClass("Boolean",
-              Nel(
+              Nel.of(
                 Constructor("True"),
                 Constructor("False")
               ))
@@ -16,7 +16,7 @@ object Run extends App {
   // polymorphic
   private val option =
     DataClass("Option",
-              Nel(
+              Nel.of(
                 Constructor("Some", Ax),
                 Constructor("None")
               ))
@@ -24,7 +24,7 @@ object Run extends App {
   // polymorphic
   private val list =
     DataClass("List",
-              Nel(
+              Nel.of(
                 Constructor("Cons", Ax, Parameter("xs", ConstructedLiteral("List", A))),
                 Constructor("Nil")
               ))
@@ -32,7 +32,7 @@ object Run extends App {
   // polymorphic over two parameters
   private val either =
     DataClass("Either",
-              Nel(
+              Nel.of(
                 Constructor("Left", Ax),
                 Constructor("Right", Parameter("x", B))
               ))
@@ -46,14 +46,14 @@ object Run extends App {
   // example of one constructor
   private val nel =
     DataClass("NonEmptyList",
-              Nel(
+              Nel.of(
                 Constructor("Nel", Ax, Parameter("xs", ConstructedLiteral("List", A)))
               ))
 
   private val json =
     DataClass(
       "JsonValue",
-      Nel(
+      Nel.of(
         Constructor("JNull"),
         Constructor("JBool", Parameter("b", TypeLiteral("Boolean"))),
         Constructor("JString", Parameter("s", TypeLiteral("String"))),

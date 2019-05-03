@@ -7,7 +7,7 @@ sealed trait PlatonicConstruct
 
 object DataClass {
   def typeRegistry(dc: DataClass): List[String] =
-    dc.constructors.list.toList
+    dc.constructors.toList
       .flatMap(typeRegistry)
       .distinct
 

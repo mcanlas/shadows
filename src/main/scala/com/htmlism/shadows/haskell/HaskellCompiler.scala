@@ -12,7 +12,7 @@ object HaskellCompiler extends Transpiler[plato.PlatonicConstruct, TopDeclaratio
     val base = DataDeclaration(a.name, a.typeRegistry.map(_.toLowerCase): _*)
 
     val withCons =
-      a.constructors.list.foldLeft(base)((b, tc) => b.copy(constructors = b.constructors :+ consToCons(tc)))
+      a.constructors.foldLeft(base)((b, tc) => b.copy(constructors = b.constructors :+ consToCons(tc)))
 
     List(withCons)
   }

@@ -1,6 +1,6 @@
 package com.htmlism.shadows
 
-import scalaz.NonEmptyList
+import cats.data.NonEmptyList
 
 package object plato {
   type Nel[A] = NonEmptyList[A]

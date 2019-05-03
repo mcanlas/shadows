@@ -1,6 +1,7 @@
 scalaVersion := "2.12.8"
 
-libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.2.27"
+libraryDependencies += "org.typelevel" %% "cats-effect" % "1.3.0"
+libraryDependencies += "org.typelevel" %% "mouse" % "0.20"
 
 libraryDependencies += "org.scalatest"  %% "scalatest"  % "3.0.7"  % "test"
 libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.14.0" % "test"
