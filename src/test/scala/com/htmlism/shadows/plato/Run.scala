@@ -1,8 +1,8 @@
 package com.htmlism.shadows
 package plato
 
-import cats._
 import cats.effect._
+import cats.implicits._
 
 import mouse.any._
 
@@ -111,36 +111,30 @@ object Run extends IOApp {
     * @tparam A A source language
     * @tparam B A destination language
     */
-  def show[A, B: ShadowShow](c: Transpiler[A, B], x: A, out: java.io.PrintWriter): Unit =
+  def show[A, B: ShadowShow](c: Transpiler[A, B], x: A): String =
     (x |> c.transpile)
       .map(implicitly[ShadowShow[B]].show)
-      .mkString("\n\n") |> out.println
+      .mkString("\n\n")
 
   val dataClasses =
     List(boolean, option, list, either, nel, json)
 
   type ResourceIO[A] = Resource[IO, A]
 
-  val res =
-    Apply[ResourceIO].product(
-      SafePrintWriter.createResource[IO]("generated.hs"),
-        SafePrintWriter.createResource[IO]("generated.scala"))
+  private[this] val writeHaskell =
+    PrintWriterResource[IO]("generated.hs")
+      .use { hs =>
+        dataClasses.traverse(d => (show(haskell.HaskellCompiler, d) |> hs.println) *> hs.println(""))
+      }
+
+  private[this] val writeScala =
+    PrintWriterResource[IO]("generated.scala")
+      .use { sc =>
+         sc.println("package donotcollide") *>
+          dataClasses.traverse(d => sc.println("\n//\n") *> (show(scala.ScalaCompiler, d) |> sc.println))
+      }
 
   def run(args: List[String]): IO[ExitCode] =
-    res.use { case (hs, sc) =>
-      IO {
-        sc.println("package donotcollide")
-
-        dataClasses
-          .foreach { d =>
-            show(haskell.HaskellCompiler, d, hs)
-            hs.println()
-
-            sc.println("\n//\n")
-            show(scala.ScalaCompiler, d, sc)
-          }
-
-        ExitCode.Success
-      }
-    }
+    (writeHaskell *> writeScala)
+      .as(ExitCode.Success)
 }
