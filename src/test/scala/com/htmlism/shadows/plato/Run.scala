@@ -111,7 +111,7 @@ object Run extends IOApp {
     * @tparam A A source language
     * @tparam B A destination language
     */
-  def show[A, B: ShadowShow](c: Transpiler[A, B], x: A): String =
+  def show[A, B: ShadowShow](c: Transpiler[A, B])(x: A): String =
     (x |> c.transpile)
       .map(implicitly[ShadowShow[B]].show)
       .mkString("\n\n")
@@ -124,14 +124,17 @@ object Run extends IOApp {
   private[this] val writeHaskell =
     PrintWriterResource[IO]("generated.hs")
       .use { hs =>
-        dataClasses.traverse(d => (show(haskell.HaskellCompiler, d) |> hs.println) *> hs.println(""))
+        dataClasses
+          .map(show(haskell.HaskellCompiler))
+          .mkString("\n\n") |> hs.println
       }
 
   private[this] val writeScala =
     PrintWriterResource[IO]("generated.scala")
       .use { sc =>
-         sc.println("package donotcollide") *>
-          dataClasses.traverse(d => sc.println("\n//\n") *> (show(scala.ScalaCompiler, d) |> sc.println))
+        dataClasses.map(show(scala.ScalaCompiler))
+          .::("package donotcollide")
+          .mkString("\n\n//\n\n") |> sc.println
       }
 
   def run(args: List[String]): IO[ExitCode] =
