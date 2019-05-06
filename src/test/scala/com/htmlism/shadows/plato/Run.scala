@@ -138,6 +138,7 @@ object Run extends IOApp {
       }
 
   def run(args: List[String]): IO[ExitCode] =
-    (writeHaskell *> writeScala)
+    List(writeHaskell, writeScala)
+      .parSequence
       .as(ExitCode.Success)
 }
