@@ -5,27 +5,25 @@ import java.io.PrintWriter
 import cats.effect._
 
 object PrintWriterResource {
-  def apply[F[_] : Sync](dest: String): Resource[F, ResourceFileAlg[F]] =
+  def apply[F[_]](dest: String)(implicit F: Sync[F]): Resource[F, ResourceFileAlg[F]] =
     Resource.make {
-      Sync[F].delay {
-        new ResourceFileAlgSync[F](dest) : ResourceFileAlg[F]
+      F.delay {
+        new ResourceFileAlg[F] {
+          private[this] lazy val printer =
+            new PrintWriter("src/main/resources/" + dest)
+
+          def println(s: String): F[Unit] =
+            F.delay {
+              printer.println(s)
+            }
+
+          def close: F[Unit] =
+            F.delay {
+              printer.close()
+            }
+        } : ResourceFileAlg[F]
       }
     } (_.close)
-
-  private class ResourceFileAlgSync[F[_]](dest: String)(implicit F: Sync[F]) extends ResourceFileAlg[F] {
-    private[this] lazy val printer =
-      new PrintWriter("src/main/resources/" + dest)
-
-    def println(s: String): F[Unit] =
-      F.delay {
-        printer.println(s)
-      }
-
-    def close: F[Unit] =
-      F.delay {
-        printer.close()
-      }
-  }
 }
 
 trait ResourceFileAlg[F[_]] {

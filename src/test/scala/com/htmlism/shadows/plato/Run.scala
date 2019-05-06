@@ -119,8 +119,6 @@ object Run extends IOApp {
   val dataClasses =
     List(boolean, option, list, either, nel, json)
 
-  type ResourceIO[A] = Resource[IO, A]
-
   private[this] val writeHaskell =
     PrintWriterResource[IO]("generated.hs")
       .use { hs =>
@@ -132,7 +130,8 @@ object Run extends IOApp {
   private[this] val writeScala =
     PrintWriterResource[IO]("generated.scala")
       .use { sc =>
-        dataClasses.map(show(scala.ScalaCompiler))
+        dataClasses
+          .map(show(scala.ScalaCompiler))
           .::("package donotcollide")
           .mkString("\n\n//\n\n") |> sc.println
       }
