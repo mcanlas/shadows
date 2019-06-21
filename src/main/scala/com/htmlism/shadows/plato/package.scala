@@ -13,12 +13,12 @@ package object plato {
 
   val Ax = Parameter("x", A)
 
-  implicit class Ops(s: Symbol) {
+  implicit class Ops(s: String) {
     def ntc: NullaryTypeConstructor =
-      NullaryTypeConstructor(s.name)
+      NullaryTypeConstructor(s)
 
     def utc: UnaryTypeConstructor =
-      UnaryTypeConstructor(s.name)
+      UnaryTypeConstructor(s)
   }
 
   def linearize(ts: TypeSignature): (List[TypeSignature], TerminalTypeSignature) = {

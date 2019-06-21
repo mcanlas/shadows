@@ -21,9 +21,9 @@ object PrintWriterResource {
             F.delay {
               printer.close()
             }
-        } : ResourceFileAlg[F]
+        }: ResourceFileAlg[F]
       }
-    } (_.close)
+    }(_.close)
 }
 
 trait ResourceFileAlg[F[_]] {

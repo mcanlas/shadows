@@ -65,7 +65,7 @@ object Run extends IOApp {
 
   private val functor =
     TypeClass
-      .k1("Functor", 'F.utc)
+      .k1("Functor", "F".utc)
       .w(Method("map", FA =>: (A =>: B) =>: FB))
 
   private val applicative =
@@ -80,7 +80,7 @@ object Run extends IOApp {
 
   private val semigroup =
     TypeClass
-      .k0("Semigroup", 'A.ntc)
+      .k0("Semigroup", "A".ntc)
       .w(Method("plus", A =>: A =>: A))
 
   private val monoid =
@@ -137,7 +137,6 @@ object Run extends IOApp {
       }
 
   def run(args: List[String]): IO[ExitCode] =
-    List(writeHaskell, writeScala)
-      .parSequence
+    List(writeHaskell, writeScala).parSequence
       .as(ExitCode.Success)
 }
