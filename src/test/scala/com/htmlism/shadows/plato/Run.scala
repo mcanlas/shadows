@@ -116,7 +116,7 @@ object Run extends IOApp {
       .map(implicitly[ShadowShow[B]].show)
       .mkString("\n\n")
 
-  val dataClasses =
+  private val dataClasses =
     List(boolean, option, list, either, nel, json)
 
   private[this] val writeHaskell =
