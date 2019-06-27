@@ -134,7 +134,7 @@ object Run extends IOApp {
     PrintWriterResource[IO]("generated.scala")
       .use { sc =>
         dataClasses
-          .map(show(scala.ScalaCompiler))
+          .map(show(vanilla.ScalaCompiler))
           .::("package donotcollide")
           .mkString("\n\n//\n\n") |> sc.println
       }

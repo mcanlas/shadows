@@ -1,5 +1,5 @@
 package com.htmlism.shadows
-package scala
+package vanilla
 
 object Template {
   implicit val scalaShow: ShadowShow[Template] =

@@ -1,5 +1,5 @@
 package com.htmlism.shadows
-package scala
+package vanilla
 
 import com.htmlism.shadows.plato.{DataClass, TypeClass, TypeSignature}
 
