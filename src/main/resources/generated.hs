@@ -1,3 +1,13 @@
+class Functor
+
+class Applicative
+
+class Monad
+
+class Semigroup
+
+class Monoid
+
 data Boolean = True | False
 
 data Option a = Some a | None

@@ -5,10 +5,10 @@ object HaskellShow extends ShadowShow[TopDeclaration] {
   def show(x: TopDeclaration): String =
     x match {
       case d: DataDeclaration => dataShow(d)
-      case _: TypeClass       => ???
+      case t: TypeClass       => typeShow(t)
     }
 
-  def dataShow(x: DataDeclaration): String = {
+  private def dataShow(x: DataDeclaration): String = {
     val constructors = x.constructors.map(cToStr).mkString(" | ")
 
     val left =
@@ -16,6 +16,10 @@ object HaskellShow extends ShadowShow[TopDeclaration] {
         .mkString(" ")
 
     s"data $left = $constructors"
+  }
+
+  private def typeShow(x: TypeClass): String = {
+    s"class ${x.name}"
   }
 
   private def cToStr(c: Constructor) = {

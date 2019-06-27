@@ -4,8 +4,11 @@ package haskell
 object HaskellCompiler extends Transpiler[plato.PlatonicConstruct, TopDeclaration] {
   def transpile(a: plato.PlatonicConstruct): List[TopDeclaration] =
     a match {
-      case dc: plato.DataClass => transpileDc(dc)
-      case _: plato.TypeClass  => ???
+      case dc: plato.DataClass =>
+        transpileDc(dc)
+
+      case tc: plato.TypeClass =>
+        transpileTc(tc)
     }
 
   private def transpileDc(a: plato.DataClass) = {
@@ -16,6 +19,11 @@ object HaskellCompiler extends Transpiler[plato.PlatonicConstruct, TopDeclaratio
 
     List(withCons)
   }
+
+  private def transpileTc(x: plato.TypeClass) =
+    List {
+      TypeClass(x.name, Nil, Nil)
+    }
 
   private def consToCons(cons: plato.Constructor): Constructor =
     Constructor(

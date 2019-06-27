@@ -116,13 +116,16 @@ object Run extends IOApp {
       .map(implicitly[ShadowShow[B]].show)
       .mkString("\n\n")
 
+  private val typeClasses =
+    List(functor, applicative, monad, semigroup, monoid)
+
   private val dataClasses =
     List(boolean, option, list, either, nel, json)
 
   private[this] val writeHaskell =
     PrintWriterResource[IO]("generated.hs")
       .use { hs =>
-        dataClasses
+        (typeClasses ::: dataClasses)
           .map(show(haskell.HaskellCompiler))
           .mkString("\n\n") |> hs.println
       }
