@@ -22,7 +22,13 @@ object HaskellCompiler extends Transpiler[plato.PlatonicConstruct, TopDeclaratio
 
   private def transpileTc(x: plato.TypeClass) =
     List {
-      TypeClass(x.name, Nil, Nil)
+      x match {
+        case plato.TypeClassStar(name, parameter, _) =>
+          TypeClass(name, List(parameter.name), Nil)
+
+        case plato.TypeClassStarStar(name, parameter, _) =>
+          TypeClass(name, List(parameter.name), Nil)
+      }
     }
 
   private def consToCons(cons: plato.Constructor): Constructor =
