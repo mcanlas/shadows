@@ -8,35 +8,43 @@ import mouse.any._
 
 object Run extends IOApp {
   private val boolean =
-    DataClass("Boolean",
-              Nel.of(
-                Constructor("True"),
-                Constructor("False")
-              ))
+    DataClass(
+      "Boolean",
+      Nel.of(
+        Constructor("True"),
+        Constructor("False")
+      )
+    )
 
   // polymorphic
   private val option =
-    DataClass("Option",
-              Nel.of(
-                Constructor("Some", Ax),
-                Constructor("None")
-              ))
+    DataClass(
+      "Option",
+      Nel.of(
+        Constructor("Some", Ax),
+        Constructor("None")
+      )
+    )
 
   // polymorphic
   private val list =
-    DataClass("List",
-              Nel.of(
-                Constructor("Cons", Ax, Parameter("xs", ConstructedLiteral("List", A))),
-                Constructor("Nil")
-              ))
+    DataClass(
+      "List",
+      Nel.of(
+        Constructor("Cons", Ax, Parameter("xs", ConstructedLiteral("List", A))),
+        Constructor("Nil")
+      )
+    )
 
   // polymorphic over two parameters
   private val either =
-    DataClass("Either",
-              Nel.of(
-                Constructor("Left", Ax),
-                Constructor("Right", Parameter("x", B))
-              ))
+    DataClass(
+      "Either",
+      Nel.of(
+        Constructor("Left", Ax),
+        Constructor("Right", Parameter("x", B))
+      )
+    )
 
   /**
     * In Haskell, a constructor can have same name as the data type.
@@ -46,10 +54,12 @@ object Run extends IOApp {
     */
   // example of one constructor
   private val nel =
-    DataClass("NonEmptyList",
-              Nel.of(
-                Constructor("Nel", Ax, Parameter("xs", ConstructedLiteral("List", A)))
-              ))
+    DataClass(
+      "NonEmptyList",
+      Nel.of(
+        Constructor("Nel", Ax, Parameter("xs", ConstructedLiteral("List", A)))
+      )
+    )
 
   private val json =
     DataClass(
