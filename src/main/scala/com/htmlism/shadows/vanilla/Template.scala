@@ -34,12 +34,13 @@ sealed trait Template {
 case class ScalaObject(name: String, isCase: Boolean, typeParameters: List[String], supers: List[String])
     extends Template
 
-case class ScalaClass(name: String,
-                      isCase: Boolean,
-                      typeParameters: List[String],
-                      supers: List[String],
-                      parameters: List[String])
-    extends Template
+case class ScalaClass(
+    name: String,
+    isCase: Boolean,
+    typeParameters: List[String],
+    supers: List[String],
+    parameters: List[String]
+) extends Template
 
 case class Trait(name: String, isSealed: Boolean, typeParameters: List[String], supers: List[String]) extends Template
 
