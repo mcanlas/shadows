@@ -1,12 +1,12 @@
-class Functor
+class  Functor where
 
-class Applicative
+class  Applicative where
 
-class Monad
+class  Monad where
 
-class Semigroup
+class  Semigroup where
 
-class Monoid
+class  Monoid where
 
 data Boolean = True | False
 

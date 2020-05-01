@@ -19,7 +19,7 @@ object HaskellShow extends ShadowShow[TopDeclaration] {
   }
 
   private def typeShow(x: TypeClass): String = {
-    s"class ${x.name}"
+    s"class ${x.superTypes.mkString} ${x.name} where"
   }
 
   private def cToStr(c: Constructor) = {
