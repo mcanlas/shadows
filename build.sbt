@@ -1,4 +1,4 @@
-scalaVersion := "2.13.2"
+scalaVersion := "2.13.3"
 
 libraryDependencies += "org.typelevel" %% "cats-effect" % "2.1.3"
 libraryDependencies += "org.typelevel" %% "mouse"       % "0.25"
