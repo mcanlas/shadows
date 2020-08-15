@@ -103,13 +103,13 @@ object Run extends IOApp {
       implicitly[HaskellShow[TypeClass]].show(tc)
     }
 
-    println
+    println()
 
     println {
       implicitly[SimulacrumShow[TypeClass]].show(tc)
     }
 
-    println
+    println()
   }
 
   /**
