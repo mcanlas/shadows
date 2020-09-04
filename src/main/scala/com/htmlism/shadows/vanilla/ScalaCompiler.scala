@@ -1,7 +1,9 @@
 package com.htmlism.shadows
 package vanilla
 
-import com.htmlism.shadows.plato.{DataClass, TypeClass, TypeSignature}
+import com.htmlism.shadows.plato.DataClass
+import com.htmlism.shadows.plato.TypeClass
+import com.htmlism.shadows.plato.TypeSignature
 
 /**
   * Possible degenerate case. If a data class only has one constructor, it doesn't need

@@ -3,7 +3,6 @@ package plato
 
 import cats.effect._
 import cats.implicits._
-
 import mouse.any._
 
 object Run extends IOApp {
