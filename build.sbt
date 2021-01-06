@@ -1,6 +1,6 @@
 scalaVersion := "2.13.4"
 
-libraryDependencies += "org.typelevel" %% "cats-effect" % "3.0.0-M4"
+libraryDependencies += "org.typelevel" %% "cats-effect" % "3.0.0-M5"
 libraryDependencies += "org.typelevel" %% "mouse"       % "0.25"
 
 libraryDependencies += "org.scalatest"  %% "scalatest"  % "3.2.2"  % "test"
