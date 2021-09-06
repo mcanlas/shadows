@@ -5,7 +5,7 @@ object HaskellShow extends ShadowShow[TopDeclaration] {
   def show(x: TopDeclaration): String =
     x match {
       case d: DataDeclaration => dataShow(d)
-      case t: TypeClass       => typeShow(t)
+      case t: TypeClass => typeShow(t)
     }
 
   private def dataShow(x: DataDeclaration): String = {

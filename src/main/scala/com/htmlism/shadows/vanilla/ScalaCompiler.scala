@@ -6,14 +6,14 @@ import com.htmlism.shadows.plato.TypeClass
 import com.htmlism.shadows.plato.TypeSignature
 
 /**
-  * Possible degenerate case. If a data class only has one constructor, it doesn't need
-  * a separate trait in addition to its constructor.
+  * Possible degenerate case. If a data class only has one constructor, it doesn't need a separate trait in addition to
+  * its constructor.
   */
 object ScalaCompiler extends Transpiler[plato.PlatonicConstruct, Template] {
   def transpile(a: plato.PlatonicConstruct): List[Template] =
     a match {
       case dc @ DataClass(_, _) => transpileDc(dc)
-      case _: TypeClass         => ???
+      case _: TypeClass => ???
     }
 
   private def transpileDc(a: DataClass) =

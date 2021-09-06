@@ -48,8 +48,7 @@ object Run extends IOApp {
   /**
     * In Haskell, a constructor can have same name as the data type.
     *
-    * In Scala, this can be true for nullary constructors (case objects) but not for
-    * other constructors (case classes).
+    * In Scala, this can be true for nullary constructors (case objects) but not for other constructors (case classes).
     */
   // example of one constructor
   private val nel =
@@ -114,11 +113,15 @@ object Run extends IOApp {
   /**
     * Prints translated source code given a transpiler and some code.
     *
-    * @param c A transpiler from language `A` to language `B`
-    * @param x An expression in language `A`
+    * @param c
+    *   A transpiler from language `A` to language `B`
+    * @param x
+    *   An expression in language `A`
     *
-    * @tparam A A source language
-    * @tparam B A destination language
+    * @tparam A
+    *   A source language
+    * @tparam B
+    *   A destination language
     */
   def show[A, B: ShadowShow](c: Transpiler[A, B])(x: A): String =
     (x |> c.transpile)

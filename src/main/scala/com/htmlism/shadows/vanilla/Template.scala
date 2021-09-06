@@ -6,9 +6,9 @@ object Template {
     new ShadowShow[Template] {
       def show(x: Template): String =
         x match {
-          case a: ScalaClass  => ScalaClassShow.show(a)
+          case a: ScalaClass => ScalaClassShow.show(a)
           case a: ScalaObject => ScalaObjectShow.show(a)
-          case a: Trait       => TraitShow.show(a)
+          case a: Trait => TraitShow.show(a)
         }
     }
 
