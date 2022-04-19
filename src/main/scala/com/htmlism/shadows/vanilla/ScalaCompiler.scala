@@ -28,39 +28,42 @@ object ScalaCompiler extends Transpiler[plato.PlatonicConstruct, Template] {
   }
 
   private def constructors(a: DataClass) =
-    a.constructors.map { c =>
-      val supers =
-        if (a.typeRegistry.isEmpty)
-          List(a.name)
-        else {
-          val slug =
-            a.constructors.toList
-              .flatMap { c2 =>
-                if (c2 == c)
-                  DataClass
-                    .typeRegistry(c2)
-                else
-                  DataClass
-                    .typeRegistry(c2)
-                    .map(_ => "Nothing")
+    a.constructors
+      .map { c =>
+        val supers =
+          if (a.typeRegistry.isEmpty)
+            List(a.name)
+          else {
+            val slug =
+              a.constructors
+                .toList
+                .flatMap { c2 =>
+                  if (c2 == c)
+                    DataClass
+                      .typeRegistry(c2)
+                  else
+                    DataClass
+                      .typeRegistry(c2)
+                      .map(_ => "Nothing")
+                }
+                .mkString(", ")
+
+            List(a.name + s"[$slug]")
+          }
+
+        if (c.parameters.isEmpty) {
+          ScalaObject(c.name, isCase = true, typeParameters = Nil, supers)
+        } else {
+          val parameters =
+            c.parameters
+              .map { p =>
+                p.name + ": " + sigToStr(p.sig)
               }
-              .mkString(", ")
 
-          List(a.name + s"[$slug]")
+          ScalaClass(c.name, isCase = true, typeParameters = DataClass.typeRegistry(c), supers, parameters)
         }
-
-      if (c.parameters.isEmpty) {
-        ScalaObject(c.name, isCase = true, typeParameters = Nil, supers)
-      } else {
-        val parameters =
-          c.parameters
-            .map { p =>
-              p.name + ": " + sigToStr(p.sig)
-            }
-
-        ScalaClass(c.name, isCase = true, typeParameters = DataClass.typeRegistry(c), supers, parameters)
       }
-    }.toList
+      .toList
 
   private def sigToStr(sig: TypeSignature): String =
     sig match {

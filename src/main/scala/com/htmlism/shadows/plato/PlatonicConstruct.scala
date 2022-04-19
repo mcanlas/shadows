@@ -7,12 +7,14 @@ sealed trait PlatonicConstruct
 
 object DataClass {
   def typeRegistry(dc: DataClass): List[String] =
-    dc.constructors.toList
+    dc.constructors
+      .toList
       .flatMap(typeRegistry)
       .distinct
 
   def typeRegistry(con: Constructor): List[String] =
-    con.parameters
+    con
+      .parameters
       .map(_.sig)
       .flatMap(typeRegistry)
 

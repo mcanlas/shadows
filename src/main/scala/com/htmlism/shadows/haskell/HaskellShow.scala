@@ -27,7 +27,8 @@ object HaskellShow extends ShadowShow[TopDeclaration] {
       if (c.arguments.isEmpty)
         ""
       else
-        " " + c.arguments
+        " " + c
+          .arguments
           .map(showTs)
           .mkString(" ")
 
