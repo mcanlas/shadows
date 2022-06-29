@@ -2,7 +2,7 @@ package com.htmlism.shadows
 package plato
 
 import cats.effect._
-import cats.implicits._
+import cats.syntax.all._
 import mouse.any._
 
 object Run extends IOApp {
