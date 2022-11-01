@@ -5,7 +5,7 @@ package com.htmlism.shadows.plato
   */
 sealed trait PlatonicConstruct
 
-object DataClass {
+object DataClass:
   def typeRegistry(dc: DataClass): List[String] =
     dc.constructors
       .toList
@@ -19,7 +19,7 @@ object DataClass {
       .flatMap(typeRegistry)
 
   def typeRegistry(ts: TypeSignature): List[String] =
-    ts match {
+    ts match
       case TypeVariable(x) =>
         List(x)
 
@@ -28,18 +28,14 @@ object DataClass {
 
       case _ =>
         Nil
-    }
-}
 
-case class DataClass(name: String, constructors: Nel[Constructor]) extends PlatonicConstruct {
+case class DataClass(name: String, constructors: Nel[Constructor]) extends PlatonicConstruct:
   lazy val typeRegistry: List[String] =
     DataClass.typeRegistry(this)
-}
 
-object Constructor {
+object Constructor:
   def apply(name: String, typeSignatures: Parameter*): Constructor =
     Constructor(name, typeSignatures.toList)
-}
 
 case class Constructor(name: String, parameters: List[Parameter])
 
@@ -51,30 +47,26 @@ case class Parameter(name: String, sig: TypeSignature)
 
 // ====================================================================================================
 
-object TypeClass {
+object TypeClass:
   def k0(name: String, parameter: Star): TypeClassStar =
     TypeClassStar(name, parameter, Nil)
 
   def k1(name: String, parameter: StarStar): TypeClassStarStar =
     TypeClassStarStar(name, parameter, Nil)
-}
 
-sealed trait TypeClass extends PlatonicConstruct {
+sealed trait TypeClass extends PlatonicConstruct:
   def name: String
 
   def methods: List[Method]
-}
 
 /**
   * Think `Semigroup[A]`.
   */
-case class TypeClassStar(name: String, parameter: Star, methods: List[Method]) extends TypeClass {
+case class TypeClassStar(name: String, parameter: Star, methods: List[Method]) extends TypeClass:
   def w(m: Method): TypeClassStar = copy(methods = m +: methods)
-}
 
 /**
   * Think `Monad[List]` where `List[A]`.
   */
-case class TypeClassStarStar(name: String, parameter: StarStar, methods: List[Method]) extends TypeClass {
+case class TypeClassStarStar(name: String, parameter: StarStar, methods: List[Method]) extends TypeClass:
   def w(m: Method): TypeClassStarStar = copy(methods = m +: methods)
-}

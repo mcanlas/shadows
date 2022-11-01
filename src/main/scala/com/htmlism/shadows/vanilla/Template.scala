@@ -1,16 +1,14 @@
 package com.htmlism.shadows
 package vanilla
 
-object Template {
+object Template:
   implicit val scalaShow: ShadowShow[Template] =
-    new ShadowShow[Template] {
+    new ShadowShow[Template]:
       def show(x: Template): String =
-        x match {
+        x match
           case a: ScalaClass => ScalaClassShow.show(a)
           case a: ScalaObject => ScalaObjectShow.show(a)
           case a: Trait => TraitShow.show(a)
-        }
-    }
 
   def supersStr(xs: List[String]): String =
     if (xs.isEmpty)
@@ -23,13 +21,11 @@ object Template {
       ""
     else
       "[" + xs.mkString(", ") + "]"
-}
 
-sealed trait Template {
+sealed trait Template:
   def name: String
 
   def supers: List[String]
-}
 
 case class ScalaObject(name: String, isCase: Boolean, typeParameters: List[String], supers: List[String])
     extends Template
@@ -44,8 +40,8 @@ case class ScalaClass(
 
 case class Trait(name: String, isSealed: Boolean, typeParameters: List[String], supers: List[String]) extends Template
 
-object ScalaObjectShow extends ShadowShow[ScalaObject] {
-  def show(x: ScalaObject): String = {
+object ScalaObjectShow extends ShadowShow[ScalaObject]:
+  def show(x: ScalaObject): String =
     val strCase =
       if (x.isCase)
         "case "
@@ -59,11 +55,9 @@ object ScalaObjectShow extends ShadowShow[ScalaObject] {
       Template.supersStr(x.supers)
 
     s"${strCase}object ${x.name}$tpStr$supers"
-  }
-}
 
-object ScalaClassShow extends ShadowShow[ScalaClass] {
-  def show(x: ScalaClass): String = {
+object ScalaClassShow extends ShadowShow[ScalaClass]:
+  def show(x: ScalaClass): String =
     val strCase =
       if (x.isCase)
         "case "
@@ -83,11 +77,9 @@ object ScalaClassShow extends ShadowShow[ScalaClass] {
         "(" + x.parameters.mkString(", ") + ")"
 
     s"${strCase}class ${x.name}$tpStr$parameters$supers"
-  }
-}
 
-object TraitShow extends ShadowShow[Trait] {
-  def show(x: Trait): String = {
+object TraitShow extends ShadowShow[Trait]:
+  def show(x: Trait): String =
     val strSealed =
       if (x.isSealed)
         "sealed "
@@ -101,5 +93,3 @@ object TraitShow extends ShadowShow[Trait] {
       Template.supersStr(x.supers)
 
     s"${strSealed}trait ${x.name}$tpStr$supers"
-  }
-}

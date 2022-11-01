@@ -1,39 +1,35 @@
 package com.htmlism.shadows.plato
 
-trait SimulacrumShow[A] {
+trait SimulacrumShow[A]:
   def show(x: A): String
-}
 
-object SimulacrumShow {
+object SimulacrumShow:
   implicit val simTypeClass: SimulacrumShow[TypeClass] =
-    new SimulacrumShow[TypeClass] {
-      def show(x: TypeClass): String = {
+    new SimulacrumShow[TypeClass]:
+      def show(x: TypeClass): String =
         val (left, right) =
-          x match {
+          x match
             case TypeClassStar(_, p, _) =>
               val constraint =
-                p match {
+                p match
                   case NullaryTypeConstructor(_) =>
                     ""
 
                   case ConstrainedNtc(s, c) =>
                     " extends " + c.name + s"[$s]"
-                }
 
               (x.name + s"[${p.name}]", constraint)
 
             case TypeClassStarStar(_, p, _) =>
               val constraint =
-                p match {
+                p match
                   case UnaryTypeConstructor(_) =>
                     ""
 
                   case ConstrainedUtc(s, c) =>
                     " extends " + c.name + s"[$s]"
-                }
 
               (x.name + s"[${p.name}]", constraint)
-          }
 
         val methods =
           x.methods.map(toStr)
@@ -42,9 +38,6 @@ object SimulacrumShow {
           List(s"typeclass $left$right {") ++ methods ++ List("}")
 
         lines.mkString("\n")
-      }
-    }
 
   private def toStr(m: Method) =
     "  def " + m.name + ": "
-}

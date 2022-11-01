@@ -8,6 +8,5 @@ package com.htmlism.shadows
   * @tparam B
   *   The destination language
   */
-trait Transpiler[A, B] {
+trait Transpiler[A, B]:
   def transpile(a: A): List[B]
-}

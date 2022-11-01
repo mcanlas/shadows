@@ -9,31 +9,28 @@ import com.htmlism.shadows.plato.TypeSignature
   * Possible degenerate case. If a data class only has one constructor, it doesn't need a separate trait in addition to
   * its constructor.
   */
-object ScalaCompiler extends Transpiler[plato.PlatonicConstruct, Template] {
+object ScalaCompiler extends Transpiler[plato.PlatonicConstruct, Template]:
   def transpile(a: plato.PlatonicConstruct): List[Template] =
-    a match {
+    a match
       case dc @ DataClass(_, _) => transpileDc(dc)
       case _: TypeClass => ???
-    }
 
   private def transpileDc(a: DataClass) =
     sealedTrait(a) ++ constructors(a)
 
-  private def sealedTrait(a: DataClass) = {
+  private def sealedTrait(a: DataClass) =
     val tps = a.typeRegistry.map("+" + _)
 
     List {
       Trait(a.name, isSealed = true, typeParameters = tps, supers = Nil)
     }
-  }
 
   private def constructors(a: DataClass) =
     a.constructors
       .map { c =>
         val supers =
-          if (a.typeRegistry.isEmpty)
-            List(a.name)
-          else {
+          if (a.typeRegistry.isEmpty) List(a.name)
+          else
             val slug =
               a.constructors
                 .toList
@@ -49,11 +46,9 @@ object ScalaCompiler extends Transpiler[plato.PlatonicConstruct, Template] {
                 .mkString(", ")
 
             List(a.name + s"[$slug]")
-          }
 
-        if (c.parameters.isEmpty) {
-          ScalaObject(c.name, isCase = true, typeParameters = Nil, supers)
-        } else {
+        if (c.parameters.isEmpty) ScalaObject(c.name, isCase = true, typeParameters = Nil, supers)
+        else
           val parameters =
             c.parameters
               .map { p =>
@@ -61,12 +56,11 @@ object ScalaCompiler extends Transpiler[plato.PlatonicConstruct, Template] {
               }
 
           ScalaClass(c.name, isCase = true, typeParameters = DataClass.typeRegistry(c), supers, parameters)
-        }
       }
       .toList
 
   private def sigToStr(sig: TypeSignature): String =
-    sig match {
+    sig match
       case plato.TypeLiteral(s) =>
         s
 
@@ -81,5 +75,3 @@ object ScalaCompiler extends Transpiler[plato.PlatonicConstruct, Template] {
 
       case plato.FunctionConsType(a, b) =>
         sigToStr(a) + " => " + sigToStr(b)
-    }
-}

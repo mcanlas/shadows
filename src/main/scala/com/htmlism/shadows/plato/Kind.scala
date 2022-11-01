@@ -5,9 +5,8 @@ package com.htmlism.shadows.plato
   *
   * @group Kinds
   */
-sealed trait Kind {
+sealed trait Kind:
   def name: String
-}
 
 /**
   * @group Kinds

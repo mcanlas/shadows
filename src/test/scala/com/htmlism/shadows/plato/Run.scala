@@ -4,7 +4,7 @@ package plato
 import cats.effect._
 import cats.syntax.all._
 
-object Run extends IOApp {
+object Run extends IOApp:
   private val boolean =
     DataClass(
       "Boolean",
@@ -95,7 +95,7 @@ object Run extends IOApp {
       .k0("Monoid", ConstrainedNtc("A", semigroup))
       .w(Method("zero", A))
 
-  for (tc <- List(functor, applicative, monad, semigroup, monoid)) {
+  for (tc <- List(functor, applicative, monad, semigroup, monoid))
     println {
       implicitly[HaskellShow[TypeClass]].show(tc)
     }
@@ -107,7 +107,6 @@ object Run extends IOApp {
     }
 
     println()
-  }
 
   /**
     * Prints translated source code given a transpiler and some code.
@@ -154,4 +153,3 @@ object Run extends IOApp {
     List(writeHaskell, writeScala)
       .parSequence
       .as(ExitCode.Success)
-}

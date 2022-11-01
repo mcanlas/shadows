@@ -1,9 +1,8 @@
 package com.htmlism.shadows.plato
 
-sealed trait TypeSignature {
+sealed trait TypeSignature:
   def =>:(left: TypeSignature): FunctionConsType =
     FunctionConsType(left, this)
-}
 
 sealed trait TerminalTypeSignature extends TypeSignature
 

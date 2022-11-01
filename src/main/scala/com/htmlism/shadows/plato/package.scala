@@ -2,7 +2,7 @@ package com.htmlism.shadows
 
 import cats.data.NonEmptyList
 
-package object plato {
+package object plato:
   type Nel[A] = NonEmptyList[A]
   val Nel = NonEmptyList
 
@@ -13,30 +13,25 @@ package object plato {
 
   val Ax = Parameter("x", A)
 
-  implicit class Ops(s: String) {
+  implicit class Ops(s: String):
     def ntc: NullaryTypeConstructor =
       NullaryTypeConstructor(s)
 
     def utc: UnaryTypeConstructor =
       UnaryTypeConstructor(s)
-  }
 
-  def linearize(ts: TypeSignature): (List[TypeSignature], TerminalTypeSignature) = {
+  def linearize(ts: TypeSignature): (List[TypeSignature], TerminalTypeSignature) =
     @annotation.tailrec
     def rec(ts: TypeSignature, args: List[TypeSignature]): (List[TypeSignature], TerminalTypeSignature) =
-      ts match {
+      ts match
         case FunctionConsType(a, b) =>
           rec(b, args :+ a)
 
         case term: TerminalTypeSignature =>
           (args, term)
-      }
 
     rec(ts, Nil)
-  }
 
-  implicit final class AnyOps[A](oa: A) {
+  implicit final class AnyOps[A](oa: A):
     @inline def |>[B](f: A => B): B =
       f(oa)
-  }
-}

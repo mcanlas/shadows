@@ -3,17 +3,15 @@ package haskell
 
 sealed trait TopDeclaration
 
-object TopDeclaration {
+object TopDeclaration:
   implicit val haskellShow: ShadowShow[TopDeclaration] = HaskellShow
-}
 
-object DataDeclaration {
+object DataDeclaration:
   def apply(s: String, tps: String*): DataDeclaration =
     DataDeclaration(s, tps.toList, Nil)
-}
 
 case class DataDeclaration(name: String, typeParameters: List[String], constructors: List[Constructor])
-    extends TopDeclaration {
+    extends TopDeclaration:
   def cons(s: String): DataDeclaration =
     copy(constructors = constructors :+ Constructor(s, Nil))
 
@@ -22,7 +20,6 @@ case class DataDeclaration(name: String, typeParameters: List[String], construct
 
   def cons(s: String, arguments: TypeSignature*): DataDeclaration =
     copy(constructors = constructors :+ Constructor(s, arguments.toList))
-}
 
 case class Constructor(name: String, arguments: List[TypeSignature])
 

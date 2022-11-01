@@ -1,34 +1,31 @@
 package com.htmlism.shadows
 package haskell
 
-object HaskellCompiler extends Transpiler[plato.PlatonicConstruct, TopDeclaration] {
+object HaskellCompiler extends Transpiler[plato.PlatonicConstruct, TopDeclaration]:
   def transpile(a: plato.PlatonicConstruct): List[TopDeclaration] =
-    a match {
+    a match
       case dc: plato.DataClass =>
         transpileDc(dc)
 
       case tc: plato.TypeClass =>
         transpileTc(tc)
-    }
 
-  private def transpileDc(a: plato.DataClass) = {
+  private def transpileDc(a: plato.DataClass) =
     val base = DataDeclaration(a.name, a.typeRegistry.map(_.toLowerCase): _*)
 
     val withCons =
       a.constructors.foldLeft(base)((b, tc) => b.copy(constructors = b.constructors :+ consToCons(tc)))
 
     List(withCons)
-  }
 
   private def transpileTc(x: plato.TypeClass) =
     List {
-      x match {
+      x match
         case plato.TypeClassStar(name, parameter, _) =>
           TypeClass(name, List(parameter.name), Nil)
 
         case plato.TypeClassStarStar(name, parameter, _) =>
           TypeClass(name, List(parameter.name), Nil)
-      }
     }
 
   private def consToCons(cons: plato.Constructor): Constructor =
@@ -38,7 +35,7 @@ object HaskellCompiler extends Transpiler[plato.PlatonicConstruct, TopDeclaratio
     )
 
   private def ts2ts(x: plato.TypeSignature): TypeSignature =
-    x match {
+    x match
       case plato.TypeLiteral(s) =>
         haskell.Proper(s)
 
@@ -53,6 +50,3 @@ object HaskellCompiler extends Transpiler[plato.PlatonicConstruct, TopDeclaratio
 
       case plato.FunctionConsType(_, _) =>
         throw new IllegalStateException
-    }
-
-}

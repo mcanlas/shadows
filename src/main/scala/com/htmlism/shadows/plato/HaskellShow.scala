@@ -1,39 +1,35 @@
 package com.htmlism.shadows.plato
 
-trait HaskellShow[A] {
+trait HaskellShow[A]:
   def show(x: A): String
-}
 
-object HaskellShow {
+object HaskellShow:
   implicit val hsTypeClass: HaskellShow[TypeClass] =
-    new HaskellShow[TypeClass] {
-      def show(x: TypeClass): String = {
+    new HaskellShow[TypeClass]:
+      def show(x: TypeClass): String =
         val (left, right) =
-          x match {
+          x match
             case TypeClassStar(_, p, _) =>
               val constraint =
-                p match {
+                p match
                   case NullaryTypeConstructor(_) =>
                     ""
 
                   case ConstrainedNtc(s, c) =>
                     c.name + " " + s.toLowerCase + " => "
-                }
 
               (constraint, x.name + " " + p.name.toLowerCase)
 
             case TypeClassStarStar(_, p, _) =>
               val constraint =
-                p match {
+                p match
                   case UnaryTypeConstructor(_) =>
                     ""
 
                   case ConstrainedUtc(s, c) =>
                     c.name + " " + s.toLowerCase + " => "
-                }
 
               (constraint, x.name + " " + p.name.toLowerCase)
-          }
 
         val methods =
           x.methods.map(mToStr)
@@ -42,21 +38,17 @@ object HaskellShow {
           List(s"class $left$right where") ++ methods
 
         lines.mkString("\n")
-      }
-    }
 
-  private def mToStr(m: Method) = {
-    val signature = {
+  private def mToStr(m: Method) =
+    val signature =
       val (args, ret) = m.signature |> linearize
 
       (args :+ ret).map(tsToStr).mkString(" -> ")
-    }
 
     "  " + m.name + " :: " + signature
-  }
 
   private def tsToStr(ts: TypeSignature): String =
-    ts match {
+    ts match
       case FunctionConsType(a, b) =>
         s"(${tsToStr(a)} -> ${tsToStr(b)})"
 
@@ -71,5 +63,3 @@ object HaskellShow {
 
       case TypeVariable(s) =>
         s.toLowerCase
-    }
-}
