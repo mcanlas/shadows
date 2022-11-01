@@ -34,4 +34,9 @@ package object plato {
 
     rec(ts, Nil)
   }
+
+  implicit final class AnyOps[A](oa: A) {
+    @inline def |>[B](f: A => B): B =
+      f(oa)
+  }
 }

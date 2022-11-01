@@ -1,7 +1,5 @@
 package com.htmlism.shadows.plato
 
-import mouse.any._
-
 trait HaskellShow[A] {
   def show(x: A): String
 }
