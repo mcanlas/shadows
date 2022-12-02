@@ -6,8 +6,8 @@ package object plato:
   type Nel[A] = NonEmptyList[A]
   val Nel = NonEmptyList
 
-  val A = TypeVariable("A")
-  val B = TypeVariable("B")
+  val A  = TypeVariable("A")
+  val B  = TypeVariable("B")
   val FA = ConstructedVariable("F", A)
   val FB = ConstructedVariable("F", B)
 

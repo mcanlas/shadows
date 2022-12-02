@@ -5,7 +5,7 @@ object HaskellShow extends ShadowShow[TopDeclaration]:
   def show(x: TopDeclaration): String =
     x match
       case d: DataDeclaration => dataShow(d)
-      case t: TypeClass => typeShow(t)
+      case t: TypeClass       => typeShow(t)
 
   private def dataShow(x: DataDeclaration): String =
     val constructors = x.constructors.map(cToStr).mkString(" | ")
@@ -33,7 +33,7 @@ object HaskellShow extends ShadowShow[TopDeclaration]:
 
   private def showTs(ts: TypeSignature): String =
     ts match
-      case haskell.Proper(s) =>
+      case haskell.Proper(s)            =>
         s
       case haskell.ConstructedOne(f, a) =>
         s"($f ${showTs(a)})"

@@ -13,7 +13,7 @@ object ScalaCompiler extends Transpiler[plato.PlatonicConstruct, Template]:
   def transpile(a: plato.PlatonicConstruct): List[Template] =
     a match
       case dc @ DataClass(_, _) => transpileDc(dc)
-      case _: TypeClass => ???
+      case _: TypeClass         => ???
 
   private def transpileDc(a: DataClass) =
     sealedTrait(a) ++ constructors(a)

@@ -5,6 +5,6 @@ libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.15.3" % "test"
 
 // scaladoc enhancements
 Compile / doc / scalacOptions ++= Seq(
-  "-groups", // enable support for grouped members
+  "-groups",  // enable support for grouped members
   "-diagrams" // generate type hierarchy diagrams
 )
