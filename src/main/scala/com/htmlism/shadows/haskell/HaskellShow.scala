@@ -33,7 +33,7 @@ object HaskellShow extends ShadowShow[TopDeclaration]:
 
   private def showTs(ts: TypeSignature): String =
     ts match
-      case haskell.Proper(s)            =>
+      case haskell.Proper(s) =>
         s
       case haskell.ConstructedOne(f, a) =>
         s"($f ${showTs(a)})"
