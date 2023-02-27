@@ -1,7 +1,7 @@
 libraryDependencies += "org.typelevel" %% "cats-effect" % "3.4.8"
 
 libraryDependencies += "org.scalatest"  %% "scalatest"  % "3.2.15" % "test"
-libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.15.3" % "test"
+libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.15.4" % "test"
 
 // scaladoc enhancements
 Compile / doc / scalacOptions ++= Seq(
