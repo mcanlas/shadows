@@ -21,9 +21,8 @@ object ScalaCompiler extends Transpiler[plato.PlatonicConstruct, Template]:
   private def sealedTrait(a: DataClass) =
     val tps = a.typeRegistry.map("+" + _)
 
-    List {
+    List:
       Trait(a.name, isSealed = true, typeParameters = tps, supers = Nil)
-    }
 
   private def constructors(a: DataClass) =
     a.constructors
