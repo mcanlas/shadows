@@ -96,15 +96,13 @@ object Run extends IOApp:
       .w(Method("zero", A))
 
   for (tc <- List(functor, applicative, monad, semigroup, monoid))
-    println {
+    println:
       implicitly[HaskellShow[TypeClass]].show(tc)
-    }
 
     println()
 
-    println {
+    println:
       implicitly[SimulacrumShow[TypeClass]].show(tc)
-    }
 
     println()
 
