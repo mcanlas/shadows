@@ -2,7 +2,7 @@ package com.htmlism.shadows.plato
 
 import java.io.PrintWriter
 
-import cats.effect._
+import cats.effect.*
 
 object PrintWriterResource:
   def apply[F[_]](dest: String)(implicit F: Sync[F]): Resource[F, ResourceFileAlg[F]] =

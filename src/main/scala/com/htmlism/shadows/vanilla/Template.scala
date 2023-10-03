@@ -11,16 +11,12 @@ object Template:
           case a: Trait       => TraitShow.show(a)
 
   def supersStr(xs: List[String]): String =
-    if (xs.isEmpty)
-      ""
-    else
-      " extends " + xs.mkString(" with ")
+    if xs.isEmpty then ""
+    else " extends " + xs.mkString(" with ")
 
   def tpStr(xs: List[String]): String =
-    if (xs.isEmpty)
-      ""
-    else
-      "[" + xs.mkString(", ") + "]"
+    if xs.isEmpty then ""
+    else "[" + xs.mkString(", ") + "]"
 
 sealed trait Template:
   def name: String
@@ -43,10 +39,8 @@ case class Trait(name: String, isSealed: Boolean, typeParameters: List[String], 
 object ScalaObjectShow extends ShadowShow[ScalaObject]:
   def show(x: ScalaObject): String =
     val strCase =
-      if (x.isCase)
-        "case "
-      else
-        ""
+      if x.isCase then "case "
+      else ""
 
     val tpStr =
       Template.tpStr(x.typeParameters)
@@ -59,10 +53,8 @@ object ScalaObjectShow extends ShadowShow[ScalaObject]:
 object ScalaClassShow extends ShadowShow[ScalaClass]:
   def show(x: ScalaClass): String =
     val strCase =
-      if (x.isCase)
-        "case "
-      else
-        ""
+      if x.isCase then "case "
+      else ""
 
     val tpStr =
       Template.tpStr(x.typeParameters)
@@ -71,20 +63,16 @@ object ScalaClassShow extends ShadowShow[ScalaClass]:
       Template.supersStr(x.supers)
 
     val parameters =
-      if (x.parameters.isEmpty)
-        ""
-      else
-        "(" + x.parameters.mkString(", ") + ")"
+      if x.parameters.isEmpty then ""
+      else "(" + x.parameters.mkString(", ") + ")"
 
     s"${strCase}class ${x.name}$tpStr$parameters$supers"
 
 object TraitShow extends ShadowShow[Trait]:
   def show(x: Trait): String =
     val strSealed =
-      if (x.isSealed)
-        "sealed "
-      else
-        ""
+      if x.isSealed then "sealed "
+      else ""
 
     val tpStr =
       Template.tpStr(x.typeParameters)

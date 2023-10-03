@@ -11,7 +11,7 @@ object HaskellCompiler extends Transpiler[plato.PlatonicConstruct, TopDeclaratio
         transpileTc(tc)
 
   private def transpileDc(a: plato.DataClass) =
-    val base = DataDeclaration(a.name, a.typeRegistry.map(_.toLowerCase): _*)
+    val base = DataDeclaration(a.name, a.typeRegistry.map(_.toLowerCase)*)
 
     val withCons =
       a.constructors.foldLeft(base)((b, tc) => b.copy(constructors = b.constructors :+ consToCons(tc)))

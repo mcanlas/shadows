@@ -21,8 +21,7 @@ object HaskellShow extends ShadowShow[TopDeclaration]:
 
   private def cToStr(c: Constructor) =
     val parameters =
-      if (c.arguments.isEmpty)
-        ""
+      if c.arguments.isEmpty then ""
       else
         " " + c
           .arguments

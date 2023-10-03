@@ -28,13 +28,13 @@ object ScalaCompiler extends Transpiler[plato.PlatonicConstruct, Template]:
     a.constructors
       .map { c =>
         val supers =
-          if (a.typeRegistry.isEmpty) List(a.name)
+          if a.typeRegistry.isEmpty then List(a.name)
           else
             val slug =
               a.constructors
                 .toList
                 .flatMap { c2 =>
-                  if (c2 == c)
+                  if c2 == c then
                     DataClass
                       .typeRegistry(c2)
                   else
@@ -46,7 +46,7 @@ object ScalaCompiler extends Transpiler[plato.PlatonicConstruct, Template]:
 
             List(a.name + s"[$slug]")
 
-        if (c.parameters.isEmpty) ScalaObject(c.name, isCase = true, typeParameters = Nil, supers)
+        if c.parameters.isEmpty then ScalaObject(c.name, isCase = true, typeParameters = Nil, supers)
         else
           val parameters =
             c.parameters

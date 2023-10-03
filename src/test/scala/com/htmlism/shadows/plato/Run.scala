@@ -1,8 +1,8 @@
 package com.htmlism.shadows
 package plato
 
-import cats.effect._
-import cats.syntax.all._
+import cats.effect.*
+import cats.syntax.all.*
 
 object Run extends IOApp:
   private val boolean =
@@ -95,7 +95,7 @@ object Run extends IOApp:
       .k0("Monoid", ConstrainedNtc("A", semigroup))
       .w(Method("zero", A))
 
-  for (tc <- List(functor, applicative, monad, semigroup, monoid))
+  for tc <- List(functor, applicative, monad, semigroup, monoid) do
     println:
       implicitly[HaskellShow[TypeClass]].show(tc)
 
