@@ -130,7 +130,7 @@ object Run extends IOApp:
   private val dataClasses =
     List(boolean, option, list, either, nel, json)
 
-  private[this] val writeHaskell =
+  private val writeHaskell =
     PrintWriterResource[IO]("generated.hs")
       .use { hs =>
         (typeClasses ::: dataClasses)
@@ -138,7 +138,7 @@ object Run extends IOApp:
           .mkString("\n\n") |> hs.println
       }
 
-  private[this] val writeScala =
+  private val writeScala =
     PrintWriterResource[IO]("generated.scala")
       .use { sc =>
         dataClasses
