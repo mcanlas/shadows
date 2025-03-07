@@ -1,4 +1,4 @@
-libraryDependencies += "org.typelevel" %% "cats-effect" % "3.5.4"
+libraryDependencies += "org.typelevel" %% "cats-effect" % "3.5.7"
 
 libraryDependencies += "org.scalatest"  %% "scalatest"  % "3.2.16" % "test"
 libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.17.0" % "test"
