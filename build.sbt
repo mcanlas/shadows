@@ -1,6 +1,6 @@
 libraryDependencies += "org.typelevel" %% "cats-effect" % "3.7.0"
 
-libraryDependencies += "org.scalatest"  %% "scalatest"  % "3.2.19" % "test"
+libraryDependencies += "org.scalatest"  %% "scalatest"  % "3.2.20" % "test"
 libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.17.0" % "test"
 
 // scaladoc enhancements
