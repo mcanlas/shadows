@@ -33,6 +33,7 @@ object HaskellCompiler extends Transpiler[plato.PlatonicConstruct, TopDeclaratio
       cons.parameters.map(_.sig).map(ts2ts)
     )
 
+  @SuppressWarnings(Array("org.wartremover.warts.Throw"))
   private def ts2ts(x: plato.TypeSignature): TypeSignature =
     x match
       case plato.TypeLiteral(s) =>

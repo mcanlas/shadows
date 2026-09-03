@@ -10,6 +10,7 @@ import com.htmlism.shadows.plato.TypeSignature
   * its constructor.
   */
 object ScalaCompiler extends Transpiler[plato.PlatonicConstruct, Template]:
+  @SuppressWarnings(Array("org.wartremover.warts.TripleQuestionMark"))
   def transpile(a: plato.PlatonicConstruct): List[Template] =
     a match
       case dc @ DataClass(_, _) => transpileDc(dc)
